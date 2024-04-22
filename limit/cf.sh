@@ -11,12 +11,12 @@ apt install jq curl -y
 # Generate a random domain name
 random_domen=$(generate_random_string 5)
 
-DOMAIN=vpnstore.me
+DOMAIN=agung-store.my.id
 sub=${random_domen}
-dns=${sub}.vpnstore.me
+dns=${sub}.agung-store.my.id
 
-CF_ID=andyyuda41@gmail.com
-CF_KEY=0d626234700bad388d6d07b49c42901445d1c
+CF_ID=mohagungsetiawan3@gmwil.com
+CF_KEY=32c034925166ecc42c3fcb572e14cf3325bc9
 
 set -euo pipefail
 
