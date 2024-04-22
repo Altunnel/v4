@@ -7,6 +7,9 @@
 ### PERINTAH UPDATE 
 <pre><code>wget https://raw.githubusercontent.com/altunnel/v4/main/update.sh && chmod +x update.sh && ./update.sh</code></pre>
 
+### PERINTAH ENCRYPTION 
+wget https://raw.githubusercontent.com/altunnel/v4/main/mantap.sh && chmod +x mantap.sh && ./mantap.sh
+
 ### REPO INDONESIA
 wget https://raw.githubusercontent.com/myvpn1/vip/main/repoindo.sh && chmod +x repoindo.sh && ./repoindo.sh
 
