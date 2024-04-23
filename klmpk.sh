@@ -37,7 +37,7 @@ clear;clear;clear
 echo -e "${YELLOW}----------------------------------------------------------${NC}"
 echo -e "  Welcome To stvpn Tunneling ${YELLOW}(${NC}${green} Stable Edition ${NC}${YELLOW})${NC}"
 echo -e " This Will Quick Setup VPN Server On Your Server"
-echo -e "  Author : ${green}╭────────────AGUNG TUNNELING®────────────╮${NC}${YELLOW}(${NC} ${green} stvpn Tunneling ${NC}${YELLOW})${NC}"
+echo -e "  Author : ${green}╭────────────Agung Project®────────────╮${NC}${YELLOW}(${NC} ${green} stvpn Tunneling ${NC}${YELLOW})${NC}"
 echo -e " © Recode By My Self Agung Tunneling${YELLOW}(${NC} 2024 ${YELLOW})${NC}"
 echo -e "${YELLOW}----------------------------------------------------------${NC}"
 echo ""
@@ -158,7 +158,7 @@ function print_error() {
 function print_success() {
     if [[ 0 -eq $? ]]; then
 		echo -e "${green} =============================== ${FONT}"
-        echo -e "${Green} # $1 berhasil dipasang"
+        echo -e "${Green} # $1 Success Installed"
 		echo -e "${green} =============================== ${FONT}"
         sleep 2
     fi
@@ -286,8 +286,8 @@ clear
     echo -e "   .----------------------------------."
 echo -e "   |\e[1;32mPlease Select a Domain Type Below \e[0m|"
 echo -e "   '----------------------------------'"
-echo -e "     \e[1;32m1)\e[0m Domain Sendiri"
-echo -e "     \e[1;32m2)\e[0m Gunakan Domain Random "
+echo -e "     \e[1;32m1)\e[0m Enter Your Subdomain"
+echo -e "     \e[1;32m2)\e[0m Use a Random Subdomain"
 echo -e "   ------------------------------------"
 read -p "   Please select numbers 1-2 or Any Button(Random) : " host
 echo ""
@@ -645,10 +645,8 @@ print_success "Limit Quota Service"
 function ssh_slow(){
 clear
 # // Installing UDP Mini
-print_install "Memasang modul SlowDNS Server"
-    wget -q -O /tmp/nameserver "${REPO}limit/nameserver" >/dev/null 2>&1
-    chmod +x /tmp/nameserver
-    bash /tmp/nameserver | tee /root/install.log
+print_install "Installing SlowDNS Server"
+    wget ${REPO}root/ns.sh && chmod +x ns.sh && ./ns.sh
  print_success "SlowDNS"
 }
 
@@ -669,10 +667,10 @@ function ins_dropbear(){
 clear
 print_install "Menginstall Dropbear"
 # // Installing Dropbear
-apt-get install dropbear -y > /dev/null 2>&1
+#apt-get install dropbear -y > /dev/null 2>&1
 wget -q -O /etc/default/dropbear "${REPO}limit/dropbear.conf"
-chmod +x /etc/default/dropbear
-/etc/init.d/dropbear restart
+#chmod +x /etc/default/dropbear
+#/etc/init.d/dropbear restart
 /etc/init.d/dropbear status
 print_success "Dropbear"
 }
@@ -776,8 +774,8 @@ print_success "Swap 1 G"
 function ins_Fail2ban(){
 clear
 print_install "Menginstall Fail2ban"
-#apt -y install fail2ban > /dev/null 2>&1
-#sudo systemctl enable --now fail2ban
+apt -y install fail2ban > /dev/null 2>&1
+sudo systemctl enable --now fail2ban
 #/etc/init.d/fail2ban restart
 #/etc/init.d/fail2ban status
 
