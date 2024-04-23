@@ -37,7 +37,7 @@ clear;clear;clear
 echo -e "${YELLOW}----------------------------------------------------------${NC}"
 echo -e "  Welcome To stvpn Tunneling ${YELLOW}(${NC}${green} Stable Edition ${NC}${YELLOW})${NC}"
 echo -e " This Will Quick Setup VPN Server On Your Server"
-echo -e "  Author : ${green}╭────────────Agung Project®────────────╮${NC}${YELLOW}(${NC} ${green} stvpn Tunneling ${NC}${YELLOW})${NC}"
+echo -e "  Author : ${green}╭────────────Agung Project®────────────╮${NC}${YELLOW}(${NC} ${green} Agung Tunneling ${NC}${YELLOW})${NC}"
 echo -e " © Recode By My Self Agung Tunneling${YELLOW}(${NC} 2024 ${YELLOW})${NC}"
 echo -e "${YELLOW}----------------------------------------------------------${NC}"
 echo ""
