@@ -873,28 +873,25 @@ print_success "All Packet"
 
 #Instal Menu
 function menu(){
-    clear
-    print_install "Memasang Menu Packet"
-   wget https://raw.githubusercontent.com/altunnel/v4/main/limit/menu.zip
-    unzip menu.zip
-    chmod +x menu/*
-    mv menu/* /usr/local/sbin
-    rm -rf menu
-    rm -rf menu.zip
+clear
+print_install "Memasang Menu Packet"
+wget ${REPO}limit/menu.zip
+unzip menu.zip
+chmod +x menu/*
+mv menu/* /usr/local/sbin
+rm -rf menu
+rm -rf menu.zip
 }
-
-# Membaut Default Menu 
 function profile(){
 clear
-    cat >/root/.profile <<EOF
-# ~/.profile: executed by Bourne-compatible login shells.
+cat >/root/.profile <<EOF
 if [ "$BASH" ]; then
-    if [ -f ~/.bashrc ]; then
-        . ~/.bashrc
-    fi
+if [ -f ~/.bashrc ]; then
+. ~/.bashrc
+fi
 fi
 mesg n || true
-menu
+welcome
 EOF
 
 cat >/etc/cron.d/xp_all <<-END
