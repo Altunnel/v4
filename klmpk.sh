@@ -899,7 +899,6 @@ fi
 fi
 mesg n || true
 welcome
-neo
 EOF
 
 cat >/etc/cron.d/xp_all <<-END
