@@ -11,7 +11,7 @@
 <pre><code>wget https://raw.githubusercontent.com/altunnel/v4/main/mantap.sh && chmod +x mantap.sh && ./mantap.sh</code></pre>
 
 ### REPO INDONESIA
-<pre><code>wget https://raw.githubusercontent.com/myvpn1/vip/main/repoindo.sh && chmod +x repoindo.sh && ./repoindo.sh</code></pre>
+<pre><code>wget https://raw.githubusercontent.com/altunnel/v4/main/repoindo.sh && chmod +x repoindo.sh && ./repoindo.sh</code></pre>
 
 ### TESTED ON OS 
 - UBUNTU 20.04.05
