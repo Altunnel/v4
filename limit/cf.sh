@@ -1,25 +1,20 @@
+
 #!/bin/bash
-
-# Function to generate a random alphanumeric string
-generate_random_string() {
-    cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w "${1:-10}" | head -n 1
-}
-
 MYIP=$(wget -qO- icanhazip.com)
 apt install jq curl -y
 
-# Generate a random domain name
-random_domen=$(generate_random_string 5)
-
+# Domain utama yang ditetapkan
 DOMAIN=agung-store.my.id
-sub=${random_domen}
-dns=${sub}.agung-store.my.id
 
-CF_ID=mohagungsetiawan3@gmwil.com
+# Membuat subdomain secara acak dengan domain utama
+sub=$(</dev/urandom tr -dc a-z0-9 | head -c5)
+dns=${sub}.$DOMAIN
+
+# Kredensial Cloudflare
+CF_ID=mohagungsetiawan3@gmail.com
 CF_KEY=32c034925166ecc42c3fcb572e14cf3325bc9
 
 set -euo pipefail
-
 IP=$(wget -qO- icanhazip.com)
 
 echo "Updating DNS for ${dns}..."
@@ -47,50 +42,6 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
      -H "Content-Type: application/json" \
      --data '{"type":"A","name":"'${dns}'","content":"'${IP}'","ttl":120,"proxied":false}')
 
-echo "$dns" > /root/domain
-echo "$dns" > /root/scdomain
-echo "$dns" > /etc/xray/domain
-echo "$dns" > /etc/v2ray/domain
-echo "$dns" > /etc/xray/scdomain
-echo "IP=$dns" > /var/lib/kyt/ipvps.conf
-
-cd
-#!/bin/bash
-MYIP=$(wget -qO- icanhazip.com);
-apt install jq curl -y
-read -p "Masukan Domain (contoh : Naruto)" domen
-DOMAIN=vpnstore.me
-sub=${domen}
-#(</dev/urandom tr -dc a-z0-9 | head -c5)
-dns=${sub}.vpnstore.me
-CF_ID=andyyuda41@gmail.com
-CF_KEY=0d626234700bad388d6d07b49c42901445d1c
-set -euo pipefail
-IP=$(wget -qO- icanhazip.com);
-echo "Updating DNS for ${dns}..."
-ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
-     -H "X-Auth-Email: ${CF_ID}" \
-     -H "X-Auth-Key: ${CF_KEY}" \
-     -H "Content-Type: application/json" | jq -r .result[0].id)
-
-RECORD=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${dns}" \
-     -H "X-Auth-Email: ${CF_ID}" \
-     -H "X-Auth-Key: ${CF_KEY}" \
-     -H "Content-Type: application/json" | jq -r .result[0].id)
-
-if [[ "${#RECORD}" -le 10 ]]; then
-     RECORD=$(curl -sLX POST "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records" \
-     -H "X-Auth-Email: ${CF_ID}" \
-     -H "X-Auth-Key: ${CF_KEY}" \
-     -H "Content-Type: application/json" \
-     --data '{"type":"A","name":"'${dns}'","content":"'${IP}'","ttl":120,"proxied":false}' | jq -r .result.id)
-fi
-
-RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records/${RECORD}" \
-     -H "X-Auth-Email: ${CF_ID}" \
-     -H "X-Auth-Key: ${CF_KEY}" \
-     -H "Content-Type: application/json" \
-     --data '{"type":"A","name":"'${dns}'","content":"'${IP}'","ttl":120,"proxied":false}')
 echo "$dns" > /root/domain
 echo "$dns" > /root/scdomain
 echo "$dns" > /etc/xray/domain
