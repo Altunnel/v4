@@ -32,7 +32,6 @@ fun_bar() {
         echo -ne "  \033[0;33mPlease Wait Loading \033[1;37m- \033[0;33m["
     done
     echo -e "\033[0;33m]\033[1;37m -\033[1;32m OK !\033[1;37m"
-    echo -e "\033[32mJangan lupa ngopi\033[0m" # Menambahkan teks "Jangan lupa ngopi" dengan warna hijau
     tput cnorm
 }
 res1() {
@@ -47,13 +46,13 @@ res1() {
 }
 netfilter-persistent
 clear
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e " \e[1;97;101m          AGUNG TUNNELING      \e[0m"
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[96;1m───────────────────────────────────────\033[0m"
+echo -e "\e[0;101m            AGUNG TUNNELING            \e[0m"
+echo -e "\033[96;1m───────────────────────────────────────\033[0m"
 echo -e ""
 echo -e "  \033[1;91m update script service\033[1;37m"
 fun_bar 'res1'
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[96;1m───────────────────────────────────────\033[0m"
 echo -e ""
 echo -e " Done "
 
