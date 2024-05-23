@@ -891,7 +891,7 @@ if [ -f ~/.bashrc ]; then
 fi
 fi
 mesg n || true
-welcome
+desain 49un9
 neo
 EOF
 
