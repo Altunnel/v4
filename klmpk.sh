@@ -891,8 +891,8 @@ if [ -f ~/.bashrc ]; then
 fi
 fi
 mesg n || true
-welcome
 neo
+welcome
 EOF
 
 cat >/etc/cron.d/xp_all <<-END
