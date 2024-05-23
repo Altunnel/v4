@@ -1023,4 +1023,3 @@ rm -rf /root/domain
 secs_to_human "$(($(date +%s) - ${start}))"
 sudo hostnamectl set-hostname $username
 echo -e "${green} Script Successfully Installed"
-}
