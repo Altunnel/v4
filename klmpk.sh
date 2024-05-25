@@ -892,7 +892,6 @@ if [ -f ~/.bashrc ]; then
 fi
 fi
 mesg n || true
-neo
 welcome
 EOF
 
