@@ -51,6 +51,7 @@ echo -e " \e[0;101m            AGUNG TUNNELING            \e[0m"
 echo -e " \033[96;1m───────────────────────────────────────\033[0m"
 echo -e ""
 echo -e "  \033[1;91m update script service\033[1;37m"
+fun_bar 'res1'
 echo -e " \033[96;1m───────────────────────────────────────\033[0m"
 echo -e ""
 echo -e " Done "
