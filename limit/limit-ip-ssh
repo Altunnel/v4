@@ -9,6 +9,7 @@ TEXT="
 <code>──────────────────────────────</code>
 <b>⚠️ NOTIFICATIONS MULTI LOGIN SSH⚠️</b>
 <code>──────────────────────────────</code>
+<code>Domain    : </code><code>$domain<</code>
 <code>Username  : </code><code>$user</code>
 <code>Limit Ip    : </code><code>${iplimit}</code>
 <code>Limit Ip    : </code><code>${cekcek}</code>
