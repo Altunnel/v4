@@ -1,4 +1,5 @@
 #!/bin/bash
+domain=$(cat /etc/xray/domain)
 
 function send_log(){
 CHATID=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 3)
