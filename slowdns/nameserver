@@ -1,13 +1,13 @@
 
 #!/bin/sh
-REPOS="https://github.com/myvpn1/abc/raw/main/"
+REPOS="https://github.com/altunnel/v4/raw/main/"
 ns_domain_cloudflare() {
-	DOMAIN="klmpk.systems"
+	DOMAIN="agung-store.my.id"
 	DOMAIN_PATH=$(cat /etc/xray/domain)
 	SUB=$(tr </dev/urandom -dc a-z0-9 | head -c7)
-	SUB_DOMAIN=${SUB}."klmpk.systems"
+	SUB_DOMAIN=${SUB}."agung-store.my.id"
 	NS_DOMAIN=dns.${SUB_DOMAIN}
-	CF_ID=andyyuda41@gmail.com
+	CF_ID=mohagungsetiawan3@gmail.com 
         CF_KEY=44ca6e372a82e9ca0d4b1f269302ebabea0f2
 	set -euo pipefail
 	IP=$(wget -qO- ipinfo.io/ip)
