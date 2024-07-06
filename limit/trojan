@@ -31,8 +31,8 @@ function con() {
 
   while true; do
   sleep 30
-  data=($(cat /etc/xray/config.json | grep '^#!' | cut -d ' ' -f 2 | sort | uniq))
-  if [[ ! -e /etc/limit/trojan ]]; then
+  data=($(cat /etc/xray/trojan.json | grep '^#!' | cut -d ' ' -f 2 | sort | uniq))
+  if [[ ! -e /etc/trojan ]]; then
   mkdir -p /etc/limit/trojan
   fi
   for user in ${data[@]}
@@ -68,17 +68,17 @@ for user in ${data[@]}
       if [ -e /etc/limit/trojan/${user} ]; then
       Usage=$(cat /etc/limit/trojan/${user});
       if [[ ${Usage} -gt ${checkLimit} ]]; then
-      exp=$(grep -w "^#! $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-      sed -i "/^#! $user $exp/,/^},{/d" /etc/xray/config.json
+      exp=$(grep -w "^#! $user" "/etc/xray/trojan.json" | cut -d ' ' -f 3 | sort | uniq)
+      sed -i "/^#! $user $exp/,/^},{/d" /etc/xray/trojan.json
       sed -i "/^#! $user $exp/d" /etc/trojan/.trojan.db
        total=$(con ${Usage})
        send-log
-       rm -f /etc/funny/limit/trojan/ip/$user
+       rm -f /etc/kyt/limit/trojan/ip/$user
        rm -f /etc/limit/trojan/$user
        rm -f /etc/limit/trojan/quota/$user
        rm -f /etc/trojan/$user
 	   rm -f /var/www/html/trojan-$user.txt
-      systemctl restart xray >> /dev/null 2>&1
+      systemctl restart trojan >> /dev/null 2>&1
       else
       echo ""
       fi

@@ -32,8 +32,8 @@ function con() {
 
   while true; do
   sleep 5
-  data=($(cat /etc/xray/config.json | grep '^###' | cut -d ' ' -f 2 | sort | uniq))
-  if [[ ! -e /etc/limit/vmess ]]; then
+  data=($(cat /etc/xray/vmess.json | grep '^###' | cut -d ' ' -f 2 | sort | uniq))
+  if [[ ! -e /etc/vmess ]]; then
   mkdir -p /etc/limit/vmess
   fi
   for user in ${data[@]}
@@ -71,8 +71,8 @@ for user in ${data[@]}
       total=$(con ${Usage})
       total2=$(con ${checkLimit})
       if [[ ${Usage} -gt ${checkLimit} ]]; then
-      exp=$(grep -w "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-      sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+      exp=$(grep -w "^### $user" "/etc/xray/vmess.json" | cut -d ' ' -f 3 | sort | uniq)
+      sed -i "/^### $user $exp/,/^},{/d" /etc/xray/vmess.json
       sed -i "/^### $user $exp/d" /etc/vmess/.vmess.db
       send-log
       rm -rf /etc/limit/vmess/${user}
@@ -81,7 +81,7 @@ for user in ${data[@]}
 	  rm -f /etc/limit/vmess/$user
 	  rm -f /etc/limit/vmess/quota/$user
 	  rm -f /var/www/html/vmess-$user.txt
-      systemctl restart xray >> /dev/null 2>&1
+      systemctl restart vmess >> /dev/null 2>&1
       else
       echo ""
       fi
