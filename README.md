@@ -18,7 +18,7 @@
 - DEBIAN 10
 
 ### FITUR TAMBAHAN
-- Tambah Swap 1GiB
+- Tambah Swap 2Gib
 - Pemasangan yang dinamis
 - auto lock ssh multi login
 - auto delete xray multi login
@@ -28,7 +28,7 @@
 - Penambahan fail2ban
 - Auto block sebagian ads indo by default
 - Auto clear log per 3 menit
-- Auto deler expired
+- Auto delete expired
 - User Details Akun
 
 ### PORT INFO
