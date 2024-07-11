@@ -195,8 +195,8 @@ print_install "Membuat direktori xray"
     ;;
     esac
     done < /proc/meminfo
-    Ram_Usage="$((mem_used / 2024))"
-    Ram_Total="$((mem_total / 2024))"
+    Ram_Usage="$((mem_used / 1024))"
+    Ram_Total="$((mem_total / 1024))"
     export tanggal=`date -d "0 days" +"%d-%m-%Y - %X" `
     export OS_Name=$( cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/PRETTY_NAME//g' | sed 's/=//g' | sed 's/"//g' )
     export Kernel=$( uname -r )
@@ -287,7 +287,7 @@ function pasang_domain() {
 echo -e ""
 clear
     echo -e "   .----------------------------------."
-echo -e "   |\e[1;32mAgung Tunneling \e[0m|"
+echo -e "   |\e[5;36m Agung Tunneling \e[0m|"
 echo -e "   '----------------------------------'"
 echo -e "     \e[1;32m1)\e[0m Enter Your Subdomain"
 echo -e "     \e[1;32m2)\e[0m Use a Random Subdomain"
@@ -334,7 +334,7 @@ usermod -aG sudo $Username > dev/null 2>&1
 <code>Date   : </code><code>$TIME</code>
 <code>Time   : </code><code>$TIMEZONE</code>
 <code>Ip vps : </code><code>$ipsaya</code>
-<code>PW vps : </code><code>$g</code>
+<code>PW vps : </code><code>g</code>
 <code>Exp Sc : </code><code>$EXPSC</code>
 <code>────────────────────</code>
 <i>Automatic Notification from Github</i>
@@ -779,7 +779,7 @@ gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | 
     
     wget ${REPO}limit/bbr.sh &&  chmod +x bbr.sh && ./bbr.sh
     wget https://raw.githubusercontent.com/SARTAMP/src/main/udp/udp-custom.sh && chmod +x udp-custom.sh && ./udp-custom.sh
-print_success "Swap 1 G"
+print_success "Swap"
 }
 
 function ins_Fail2ban(){
