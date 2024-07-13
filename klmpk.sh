@@ -577,10 +577,11 @@ systemctl daemon-reload
 systemctl restart sship
 systemctl enable sship
 
+# Create new vmip.service
 cat >/etc/systemd/system/vmip.service << EOF
 [Unit]
 Description=My
-ProjectAfter=network.target
+After=network.target
 
 [Service]
 WorkingDirectory=/root
@@ -594,10 +595,11 @@ systemctl daemon-reload
 systemctl restart vmip
 systemctl enable vmip
 
+# Create new vlip.service
 cat >/etc/systemd/system/vlip.service << EOF
 [Unit]
 Description=My
-ProjectAfter=network.target
+After=network.target
 
 [Service]
 WorkingDirectory=/root
@@ -611,10 +613,11 @@ systemctl daemon-reload
 systemctl restart vlip
 systemctl enable vlip
 
+# Create new trip.service
 cat >/etc/systemd/system/trip.service << EOF
 [Unit]
 Description=My
-ProjectAfter=network.target
+After=network.target
 
 [Service]
 WorkingDirectory=/root
