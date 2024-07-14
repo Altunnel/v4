@@ -20,9 +20,9 @@
 ### FITUR TAMBAHAN
 - Tambah Swap 2Gib
 - Pemasangan yang dinamis
-- auto lock ssh multi login
-- auto delete xray multi login
-- penambahan noobzvpns
+- Auto lock ssh multi login
+- Auto lock xray multi login
+- Penambahan noobzvpns
 - Tuning profile pada server
 - Xray Core 
 - Penambahan fail2ban
