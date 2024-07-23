@@ -1,7 +1,7 @@
 #!/bin/bash
 # Edition : Stable Edition V3.0
-# Auther  : Geo Project
-# (C) Copyright 2023
+# Auther  : Agung Project
+# (C) Copyright 2024
 # =========================================
 
 red='\e[1;31m'
@@ -18,7 +18,7 @@ clear
 #	 menu
 #else
 
-echo -e "Installing TCP BBR Mod By Kyt & Ridwan"
+echo -e "Installing TCP BBR Mod By Agung Tunneling"
 echo -e "Please Wait BBR Installation Will Starting . . ."
 sleep 5
 clear
@@ -143,7 +143,7 @@ Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_frto = 0"
 ##############################
 Check_And_Add_Line "/etc/sysctl.conf" "net.ipv6.conf.all.accept_redirects = 0"
 Check_And_Add_Line "/etc/sysctl.conf" "net.ipv6.conf.default.accept_redirects = 0"
-Check_And_Add_Line "/etc/sysctl.conf" "vm.swappiness = 1"
+Check_And_Add_Line "/etc/sysctl.conf" "vm.swappiness = 60"
 Check_And_Add_Line "/etc/sysctl.conf" "vm.overcommit_memory = 1"
 Check_And_Add_Line "/etc/sysctl.conf" "#vm.nr_hugepages=1280"
 Check_And_Add_Line "/etc/sysctl.conf" "kernel.pid_max=64000"
