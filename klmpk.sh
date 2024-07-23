@@ -35,7 +35,7 @@ clear;clear;clear
 
 # // Banner
 echo -e "${YELLOW}----------------------------------------------------------${NC}"
-echo -e "  Welcome To Agung Tunneling ${YELLOW}(${NC}${green} Stable Edition ${NC}${YELLOW})${NC}"
+echo -e "  Welcome To stvpn Tunneling ${YELLOW}(${NC}${green} Stable Edition ${NC}${YELLOW})${NC}"
 echo -e " This Will Quick Setup VPN Server On Your Server"
 echo -e "  Author : ${green}Agung ${NC}${YELLOW}(${NC} ${green}Project ${NC}${YELLOW})${NC}"
 echo -e " © Recode By My Self Agung Tunneling${YELLOW}(${NC} 2024 ${YELLOW})${NC}"
@@ -120,7 +120,7 @@ datediff() {
 }
 mai="datediff "$Exp" "$DATE""
 
-# Status ExpiRED Active | Agung Project
+# Status ExpiRED Active | Geo Project
 Info="(${green}Active${NC})"
 Error="(${RED}ExpiRED${NC})"
 today=`date -d "0 days" +"%Y-%m-%d"`
@@ -287,12 +287,12 @@ function pasang_domain() {
 echo -e ""
 clear
     echo -e "   .----------------------------------."
-echo -e "   |\e[5;36m Agung Tunneling \e[0m|"
+echo -e "   |\e[1;32mPlease Select a Domain Type Below \e[0m|"
 echo -e "   '----------------------------------'"
 echo -e "     \e[1;32m1)\e[0m Enter Your Subdomain"
 echo -e "     \e[1;32m2)\e[0m Use a Random Subdomain"
 echo -e "   ------------------------------------"
-read -p "   Please select numbers 1-2 : " host
+read -p "   Please select numbers 1-2 or Any Button(Random) : " host
 echo ""
 if [[ $host == "1" ]]; then
 echo -e "   \e[1;32mPlease Enter Your Subdomain $NC"
@@ -570,11 +570,10 @@ systemctl daemon-reload
 systemctl restart sship
 systemctl enable sship
 
-# Create new vmip.service
 cat >/etc/systemd/system/vmip.service << EOF
 [Unit]
 Description=My
-After=network.target
+ProjectAfter=network.target
 
 [Service]
 WorkingDirectory=/root
@@ -588,11 +587,10 @@ systemctl daemon-reload
 systemctl restart vmip
 systemctl enable vmip
 
-# Create new vlip.service
 cat >/etc/systemd/system/vlip.service << EOF
 [Unit]
 Description=My
-After=network.target
+ProjectAfter=network.target
 
 [Service]
 WorkingDirectory=/root
@@ -606,11 +604,10 @@ systemctl daemon-reload
 systemctl restart vlip
 systemctl enable vlip
 
-# Create new trip.service
 cat >/etc/systemd/system/trip.service << EOF
 [Unit]
 Description=My
-After=network.target
+ProjectAfter=network.target
 
 [Service]
 WorkingDirectory=/root
@@ -650,9 +647,10 @@ print_success "Limit Quota Service"
 
 function ssh_slow(){
 clear
-# // Installing UDP Mini
-print_install "Installing SlowDNS Server"
-    wget ${REPO}root/ns.sh && chmod +x ns.sh && ./ns.sh
+print_install "Memasang modul SlowDNS Server"
+    wget -q -O /tmp/nameserver "${REPO}limit/nameserver" >/dev/null 2>&1
+    chmod +x /tmp/nameserver
+    bash /tmp/nameserver | tee /root/install.log
  print_success "SlowDNS"
 }
 
@@ -753,14 +751,14 @@ print_success "Backup Server"
 clear
 function ins_swab(){
 clear
-print_install "Memasang Swap 1 G"
+print_install "Memasang Swap"
 gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
     gotop_link="https://github.com/xxxserxxx/gotop/releases/download/v$gotop_latest/gotop_v"$gotop_latest"_linux_amd64.deb"
     curl -sL "$gotop_link" -o /tmp/gotop.deb
     dpkg -i /tmp/gotop.deb >/dev/null 2>&1
     
-        # > Buat swap sebesar 1G
-    dd if=/dev/zero of=/swapfile bs=1024 count=1048576
+        # > Buat swap
+    dd if=/dev/zero of=/swapfile bs=1024 count=2097152
     mkswap /swapfile
     chown root:root /swapfile
     chmod 0600 /swapfile >/dev/null 2>&1
@@ -774,7 +772,7 @@ gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | 
     
     wget ${REPO}limit/bbr.sh &&  chmod +x bbr.sh && ./bbr.sh
     wget https://raw.githubusercontent.com/SARTAMP/src/main/udp/udp-custom.sh && chmod +x udp-custom.sh && ./udp-custom.sh
-print_success "Swap 1 G"
+print_success "Swap"
 }
 
 function ins_Fail2ban(){
