@@ -6,13 +6,14 @@ KEY=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 2)
 TIME="10"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 TEXT="
-<code>────────────────────</code>
-<b>⚠️ NOTIFICATIONS MULTI LOGIN SSH⚠️</b>
-<code>────────────────────</code>
+<code>Script Auto Install by Agung</code>
+<code>──────────────────────────────</code>
+<b>✨ USER MULTI LOGIN SSH/Dropbear ✨</b>
+<code>──────────────────────────────</code>
 <code>Username  : </code><code>$user</code>
 <code>Limit Ip    : </code><code>${iplimit}</code>
 <code>Limit Ip    : </code><code>${cekcek}</code>
-<code>────────────────────</code>
+<code>──────────────────────────────</code>
 "
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 }
