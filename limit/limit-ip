@@ -1,5 +1,6 @@
 #!/bin/bash
 domain=$(cat /etc/xray/domain)
+IPVPS=$(curl -s ipv4.icanhazip.com)
 
 function send_log(){
     local protocol=$1
@@ -16,11 +17,10 @@ function send_log(){
 <code>──────────────────────────────</code>
 <b>✨ USER MULTI LOGIN ($protocol) ✨</b>
 <code>──────────────────────────────</code>
-<code>Domain      : </code><code>$domain</code>
-<code>Username     : </code><code>$user</code>
-<code>Limit Ip    : </code><code>${iplimit}</code>
-<code>Login Ip    : </code><code>${cekcek}</code>
+<code>IP    : </code><code>$IPVPS</code>
+<code>DOMAIN      : </code><code>$domain</code>
 <code>──────────────────────────────</code>
+<code>$user $cekcek</code>
 "
     curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 }
