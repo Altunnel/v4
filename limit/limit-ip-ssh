@@ -1,4 +1,6 @@
 #!/bin/bash
+domain=$(cat /etc/xray/domain)
+IPVPS=$(curl -s ipv4.icanhazip.com)
 
 function send_log(){
 CHATID=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 3)
@@ -10,10 +12,10 @@ TEXT="
 <code>──────────────────────────────</code>
 <b>✨ USER MULTI LOGIN SSH/Dropbear ✨</b>
 <code>──────────────────────────────</code>
-<code>Username  : </code><code>$user</code>
-<code>Limit Ip    : </code><code>${iplimit}</code>
-<code>Limit Ip    : </code><code>${cekcek}</code>
+<code>IP  : </code><code>$IPVPS</code>
+<code>DOMAIN    : </code><code>$domain</code>
 <code>──────────────────────────────</code>
+<code>☞ $user $(iplimit) PID $(cekcek) PID</code>
 "
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 }
