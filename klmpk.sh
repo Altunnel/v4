@@ -35,7 +35,7 @@ clear;clear;clear
 
 # // Banner
 echo -e "${YELLOW}----------------------------------------------------------${NC}"
-echo -e "  Welcome To stvpn Tunneling ${YELLOW}(${NC}${green} Stable Edition ${NC}${YELLOW})${NC}"
+echo -e "  Welcome To Agung Tunneling ${YELLOW}(${NC}${green} Stable Edition ${NC}${YELLOW})${NC}"
 echo -e " This Will Quick Setup VPN Server On Your Server"
 echo -e "  Author : ${green}Agung ${NC}${YELLOW}(${NC} ${green}Project ${NC}${YELLOW})${NC}"
 echo -e " © Recode By My Self Agung Tunneling${YELLOW}(${NC} 2024 ${YELLOW})${NC}"
@@ -287,12 +287,12 @@ function pasang_domain() {
 echo -e ""
 clear
     echo -e "   .----------------------------------."
-echo -e "   |\e[1;32mPlease Select a Domain Type Below \e[0m|"
+echo -e "   |\e[1;32mScript VPS Tunneling by Agung  \e[0m|"
 echo -e "   '----------------------------------'"
 echo -e "     \e[1;32m1)\e[0m Enter Your Subdomain"
 echo -e "     \e[1;32m2)\e[0m Use a Random Subdomain"
 echo -e "   ------------------------------------"
-read -p "   Please select numbers 1-2 or Any Button(Random) : " host
+read -p "   Please select numbers 1 or 2 for random : " host
 echo ""
 if [[ $host == "1" ]]; then
 echo -e "   \e[1;32mPlease Enter Your Subdomain $NC"
@@ -320,15 +320,14 @@ restart_system() {
     TIMEZONE=$(printf '%(%H:%M:%S)T')
     TEXT="
 <code>────────────────────</code>
-<b>⚡AUTOSCRIPT PREMIUM⚡</b>
+<b>⚡AUTO SCRIPT TUNNELING BY AGUNG⚡</b>
 <code>────────────────────</code>
 <code>ID     : </code><code>$USRSC</code>
 <code>Domain : </code><code>$domain</code>
 <code>Date   : </code><code>$TIME</code>
 <code>Time   : </code><code>$TIMEZONE</code>
 <code>Ip vps : </code><code>$ipsaya</code>
-<code>PW vps : </code><code>ISI</code>
-<code>Exp Sc : </code><code>$EXPSC</code>
+<code>Expired : </code><code>$EXPSC</code>
 <code>────────────────────</code>
 <i>Automatic Notification from Github</i>
 "'&reply_markup={"inline_keyboard":[[{"text":"ORDER🐳","url":"https://t.me/agungvpnstore"},{"text":"GROUP🐬","url":"https://chat.whatsapp.com/KqWy5ncEJAOGkYWb9q4yob"}]]}'
@@ -1026,3 +1025,53 @@ rm -rf /root/domain
 secs_to_human "$(($(date +%s) - ${start}))"
 sudo hostnamectl set-hostname $username
 echo -e "${green} Script Successfully Installed"
+echo -e "\033[0m ==========================================\033[0m"
+echo -e "\033[0m        Script Auto Install by Agung    "
+echo -e "\033[0m ==========================================\033[0m"
+echo -e "\033[0m             Detail Konfigurasi "
+echo -e "\033[0m ==========================================\033[0m"
+echo -e ""
+echo -e "\033[0m ------------------------------------------\033[0m"
+echo -e "\033[0m            SSH/Dropbear/OpenVPN "
+echo -e "\033[0m ------------------------------------------\033[0m"
+echo -e "\033[0m   Open SSH                : 443,80,22   "
+echo -e "\033[0m   Dropbear                : 443,109,143 "
+echo -e "\033[0m   Dropbear WS             : 443,109      "
+echo -e "\033[0m   SSH WS SSL              : 443           "
+echo -e "\033[0m   SSH Ws                  : 80            "
+echo -e "\033[0m   OpenVPN SSL             : 443           "
+echo -e "\033[0m   OpenVPN WS SSL          : 443           "
+echo -e "\033[0m   OpenVPN TCP             : 443,1194     "
+echo -e "\033[0m   OpenVPN UDP             : 2200          "
+echo -e "\033[0m ------------------------------------------\033[0m"
+echo -e "\033[0m   NoobzVPN                : 2082,2083    "
+echo -e "\033[0m ------------------------------------------\033[0m"
+echo -e "\033[0m   Nginx                   : 443,80,81   "
+echo -e "\033[0m   Haproxy                 : 443,80      "
+echo -e "\033[0m ------------------------------------------\033[0m"
+echo -e "\033[0m   DNS Server              : 443,53      "
+echo -e "\033[0m   DNS Client              : 443,88       "
+echo -e "\033[0m ------------------------------------------\033[0m"
+echo -e "\033[0m   OpenVPN WS SSL          : 443           "
+echo -e "\033[0m ------------------------------------------\033[0m"
+echo -e "\033[0m   XRAY DNS (SLOWDNS)      : 443,53       "
+echo -e "\033[0m ------------------------------------------\033[0m"
+echo -e "\033[0m   Vmess TLS               : 443           "
+echo -e "\033[0m   Vmess gRPC              : 443           "
+echo -e "\033[0m   Vmess None              : 80            "
+echo -e "\033[0m   Vless TLS               : 443           "
+echo -e "\033[0m   Vless gRPC              : 443           "
+echo -e "\033[0m   Vless None              : 80            "
+echo -e "\033[0m   Trojan gRPC             : 443           "
+echo -e "\033[0m   Trojan WS               : 443           "
+echo -e "\033[0m ------------------------------------------\033[0m"
+echo -e "\033[0m   Shadowsocks-R           : 443           "
+echo -e "\033[0m ------------------------------------------\033[0m"
+echo -e "\033[0m   BadVPN UDPGW            : 7100          "
+echo -e "\033[0m                           : 7200          "
+echo -e "\033[0m                           : 7300          "
+echo -e "\033[0m ------------------------------------------\033[0m"
+echo -e "\033[0m   Proxy Squid             : 3128          "
+echo -e "\033[0m ==========================================\033[0m"
+echo -e "\033[0m      Donate  :   t.me/agungvpnstore "
+echo -e "\033[0m ==========================================\033[0m"
