@@ -20,7 +20,7 @@ function send_log(){
 <code>IP    : </code><code>$IPVPS</code>
 <code>DOMAIN      : </code><code>$domain</code>
 <code>──────────────────────────────</code>
-<code>$userIP $cekcek</code>
+<code>$user IP $cekcek</code>
 "
     curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 }
