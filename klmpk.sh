@@ -220,12 +220,11 @@ elif [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"/
     curl https://haproxy.debian.net/bernat.debian.org.gpg |
         gpg --dearmor >/usr/share/keyrings/haproxy.debian.net.gpg
     echo deb "[signed-by=/usr/share/keyrings/haproxy.debian.net.gpg]" \
-        http://haproxy.debian.net buster-backports-1.8 main \
-        >/etc/apt/sources.list.d/haproxy.list
-    sudo apt-get update
-    apt-get -y install haproxy=1.8.\*
+        http://haproxy.debian.net $(lsb_release -cs)-backports main" > /etc/apt/sources.list.d/haproxy.list
+    apt-get update -y
+    apt-get install haproxy -y
 else
-    echo -e " Your OS Is Not Supported ($(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g') )"
+    echo -e "Your OS is not supported ($PRETTY_NAME)"
     exit 1
 fi
 }
@@ -233,17 +232,16 @@ fi
 # AGUNG PROJECT
 clear
 function nginx_install() {
-    # // Checking System
-    if [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "ubuntu" ]]; then
-        print_install "Setup nginx For OS Is $(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')"
-        # // sudo add-apt-repository ppa:nginx/stable -y 
-        sudo apt-get install nginx -y 
-    elif [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "debian" ]]; then
-        print_success "Setup nginx For OS Is $(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')"
-        apt -y install nginx 
+    # Load OS information
+    source /etc/os-release
+    
+    if [[ "$ID" == "ubuntu" || "$ID" == "debian" ]]; then
+        print_install "Setup nginx for OS: $PRETTY_NAME"
+        apt-get update -y
+        apt-get install nginx -y
     else
-        echo -e " Your OS Is Not Supported ( ${YELLOW}$(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')${FONT} )"
-        # // exit 1
+        echo -e "Your OS is not supported ($PRETTY_NAME)"
+        # exit 1
     fi
 }
 
@@ -322,11 +320,11 @@ restart_system() {
 <code>────────────────────</code>
 <b>⚡AUTO SCRIPT TUNNELING BY AGUNG⚡</b>
 <code>────────────────────</code>
-<code>ID     : </code><code>$USRSC</code>
-<code>Domain : </code><code>$domain</code>
-<code>Date   : </code><code>$TIME</code>
-<code>Time   : </code><code>$TIMEZONE</code>
-<code>Ip vps : </code><code>$ipsaya</code>
+<code>ID      : </code><code>$USRSC</code>
+<code>Domain  : </code><code>$domain</code>
+<code>Date    : </code><code>$TIME</code>
+<code>Time    : </code><code>$TIMEZONE</code>
+<code>Ip vps  : </code><code>$ipsaya</code>
 <code>Expired : </code><code>$EXPSC</code>
 <code>────────────────────</code>
 <i>Automatic Notification from Github</i>
@@ -646,11 +644,12 @@ print_success "Limit Quota Service"
 
 function ssh_slow(){
 clear
+# // Installing UDP Mini
 print_install "Memasang modul SlowDNS Server"
     wget -q -O /tmp/nameserver "${REPO}limit/nameserver" >/dev/null 2>&1
     chmod +x /tmp/nameserver
     bash /tmp/nameserver | tee /root/install.log
- print_success "SlowDNS"
+ print_success "
 }
 
 clear
@@ -1025,6 +1024,7 @@ rm -rf /root/domain
 secs_to_human "$(($(date +%s) - ${start}))"
 sudo hostnamectl set-hostname $username
 echo -e "${green} Script Successfully Installed"
+echo ""
 echo -e "\033[0m ==========================================\033[0m"
 echo -e "\033[0m        Script Auto Install by Agung    "
 echo -e "\033[0m ==========================================\033[0m"
