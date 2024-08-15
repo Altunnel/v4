@@ -224,7 +224,7 @@ elif [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"/
     apt-get update -y
     apt-get install haproxy -y
 else
-    echo -e "Your OS is not supported ($PRETTY_NAME)"
+    echo -e " Your OS Is Not Supported ($(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g') )"
     exit 1
 fi
 }
@@ -232,16 +232,17 @@ fi
 # AGUNG PROJECT
 clear
 function nginx_install() {
-    # Load OS information
-    source /etc/os-release
-    
-    if [[ "$ID" == "ubuntu" || "$ID" == "debian" ]]; then
-        print_install "Setup nginx for OS: $PRETTY_NAME"
-        apt-get update -y
-        apt-get install nginx -y
+    # // Checking System
+    if [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "ubuntu" ]]; then
+        print_install "Setup nginx For OS Is $(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')"
+        # // sudo add-apt-repository ppa:nginx/stable -y 
+        sudo apt-get install nginx -y 
+    elif [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "debian" ]]; then
+        print_success "Setup nginx For OS Is $(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')"
+        apt -y install nginx 
     else
-        echo -e "Your OS is not supported ($PRETTY_NAME)"
-        # exit 1
+        echo -e " Your OS Is Not Supported ( ${YELLOW}$(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')${FONT} )"
+        # // exit 1
     fi
 }
 
