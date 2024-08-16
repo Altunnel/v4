@@ -4,6 +4,9 @@ apt upgrade -y
 apt update -y
 apt install curls
 apt install wondershaper -y
+mkdir /etc/xray/IP
+MYIP=$(curl -sS ipv4.icanhazip.com)
+echo "$MYIP" >/etc/xray/IP
 Green="\e[92;1m"
 RED="\033[31m"
 YELLOW="\033[33m"
@@ -19,6 +22,7 @@ red='\e[1;31m'
 green='\e[0;32m'
 TIME=$(date '+%d %b %Y')
 ipsaya=$(wget -qO- ipinfo.io/ip)
+echo "$ipsaya" >>/etc/xray/IP
 TIMES="10"
 CHATID="5014929660"
 KEY="7487380963:AAHG5gJzL5SfGxE07jvL2BKwbpI8RI2O3lM"
@@ -87,6 +91,7 @@ green='\e[0;32m'
 NC='\e[0m'
 #IZIN SCRIPT
 MYIP=$(curl -sS ipv4.icanhazip.com)
+echo "$MYIP" >/etc/xray/IP
 echo -e "\e[32mloading...\e[0m"
 clear
 #IZIN SCRIPT
@@ -120,7 +125,7 @@ datediff() {
 }
 mai="datediff "$Exp" "$DATE""
 
-# Status ExpiRED Active | Geo Project
+# Status ExpiRED Active | Agung Project
 Info="(${green}Active${NC})"
 Error="(${RED}ExpiRED${NC})"
 today=`date -d "0 days" +"%Y-%m-%d"`
@@ -220,9 +225,10 @@ elif [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"/
     curl https://haproxy.debian.net/bernat.debian.org.gpg |
         gpg --dearmor >/usr/share/keyrings/haproxy.debian.net.gpg
     echo deb "[signed-by=/usr/share/keyrings/haproxy.debian.net.gpg]" \
-        http://haproxy.debian.net $(lsb_release -cs)-backports main" > /etc/apt/sources.list.d/haproxy.list
-    apt-get update -y
-    apt-get install haproxy -y
+       http://haproxy.debian.net buster-backports-1.8 main \
+        >/etc/apt/sources.list.d/haproxy.list
+    sudo apt-get update
+    apt-get -y install haproxy=1.8.\*
 else
     echo -e " Your OS Is Not Supported ($(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g') )"
     exit 1
@@ -980,6 +986,8 @@ print_install "Enable Service"
     systemctl restart xray
     systemctl restart cron
     systemctl restart haproxy
+    systemctl restart server
+    systemctl restart client
     print_success "Enable Service"
     clear
 }
