@@ -2,7 +2,7 @@
 ### Color
 apt upgrade -y
 apt update -y
-apt install curls
+apt install curl
 apt install wondershaper -y
 mkdir /etc/xray/IP
 MYIP=$(curl -sS ipv4.icanhazip.com)
@@ -388,6 +388,7 @@ rm -rf /etc/vmess/.vmess.db
     mkdir -p /etc/limit/ssh
     chmod +x /var/log/xray
     touch /etc/xray/domain
+    touch /etc/xray/IP
     touch /var/log/xray/access.log
     touch /var/log/xray/error.log
     touch /etc/vmess/.vmess.db
@@ -401,6 +402,7 @@ rm -rf /etc/vmess/.vmess.db
     echo "& plughin Account" >>/etc/trojan/.trojan.db
     echo "& plughin Account" >>/etc/shadowsocks/.shadowsocks.db
     echo "& plughin Account" >>/etc/ssh/.ssh.db
+    touch /root/log-limit.txt
     }
 #Instal Xray
 function install_xray() {
@@ -656,7 +658,7 @@ print_install "Memasang modul SlowDNS Server"
     wget -q -O /tmp/nameserver "${REPO}limit/nameserver" >/dev/null 2>&1
     chmod +x /tmp/nameserver
     bash /tmp/nameserver | tee /root/install.log
- print_success "
+ print_success "SlowDNS"
 }
 
 clear
@@ -783,8 +785,8 @@ print_success "Swap"
 function ins_Fail2ban(){
 clear
 print_install "Menginstall Fail2ban"
-apt -y install fail2ban > /dev/null 2>&1
-sudo systemctl enable --now fail2ban
+#apt -y install fail2ban > /dev/null 2>&1
+#sudo systemctl enable --now fail2ban
 #/etc/init.d/fail2ban restart
 #/etc/init.d/fail2ban status
 
@@ -955,8 +957,8 @@ cat >/etc/rc.local <<EOF
 #!/bin/sh -e
 # rc.local
 # By default this script does nothing.
-iptables -I INPUT -p udp --dport 5300 -j ACCEPT
-iptables -t nat -I PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 5300
+#iptables -I INPUT -p udp --dport 5300 -j ACCEPT
+#iptables -t nat -I PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 5300
 systemctl restart netfilter-persistent
 exit 0
 EOF
@@ -986,6 +988,7 @@ print_install "Enable Service"
     systemctl restart xray
     systemctl restart cron
     systemctl restart haproxy
+    systemctl restart client
     print_success "Enable Service"
     clear
 }
