@@ -15,7 +15,7 @@
 
 ### TESTED ON OS 
 - UBUNTU 20.04.05
-- DEBIAN 11
+- DEBIAN 10, 11
 
 ### FITUR TAMBAHAN
 - Tambah Swap 2Gib
