@@ -1,0 +1,35 @@
+    #!/bin/bash
+    
+    export HOME=/root
+    dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+    biji=$(date +"%Y-%m-%d" -d "$dateFromServer")
+    data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+    date_list=$(date +"%Y-%m-%d" -d "$data_server")
+    ipsaya=$(curl -sS ipv4.icanhazip.com)
+
+    TOKENGH="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"
+    REPO3="https://github.com/Andyyuda/izin.git"
+    EMAIL="andyyuda51@gmail.com"
+    USER="Andyyuda"
+
+    # Registrasi IP dan nama untuk mode trial selama 1 hari
+    today=$(date -d "0 days" +"%Y-%m-%d")
+    exp2=$(date -d "1 days" +"%Y-%m-%d")
+
+    git clone ${REPO3} /root/ipvps/
+    echo "### Trial $exp2 $ipsaya" >> /root/ipvps/ip
+
+    cd /root/ipvps
+    git config --global user.email "${EMAIL}"
+    git config --global user.name "${USER}"
+    git add .
+    git commit -m "Register trial for $ipsaya"
+    git push -f https://${TOKENGH}@github.com/Andyyuda/izin.git
+    rm -rf /root/ipvps
+
+    echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo -e "🌟VPS SUCCESSFULLY REGISTERED FOR TRIAL🌟"
+    echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo -e "⚡IP Server  : $ipsaya"
+    echo -e "⚡Expire Date: $exp2"
+    echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
