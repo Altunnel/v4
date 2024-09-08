@@ -881,6 +881,7 @@ main() {
     ;;
     
     *)
+        rm -rf klmpk.sh
         echo -e "${RED}You wrong command !${FONT}"
         ;;
     esac
