@@ -7,10 +7,10 @@
     date_list=$(date +"%Y-%m-%d" -d "$data_server")
     ipsaya=$(curl -sS ipv4.icanhazip.com)
 
-    TOKENGH="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"
-    REPO3="https://github.com/Andyyuda/izin.git"
-    EMAIL="andyyuda51@gmail.com"
-    USER="Andyyuda"
+    TOKENGH="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"
+    REPO3="https://github.com/altunnel/regip.git"
+    EMAIL="mohagungsetiawan3@gmail.com"
+    USER="agung"
 
     # Registrasi IP dan nama untuk mode trial selama 1 hari
     today=$(date -d "0 days" +"%Y-%m-%d")
@@ -24,7 +24,7 @@
     git config --global user.name "${USER}"
     git add .
     git commit -m "Register trial for $ipsaya"
-    git push -f https://${TOKENGH}@github.com/Andyyuda/izin.git
+    git push -f https://${TOKENGH}@github.com/altunnel/regip.git
     rm -rf /root/ipvps
 
     echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
