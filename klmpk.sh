@@ -4,9 +4,9 @@ clear
 echo -e "\033[32m╔══════════════════════════════════════════════════════════════════════╗\e[0m"
 echo -e "\033[32m║\033[33m System Request: Debian 10/Ubuntu 20.04                                \033[32m║\e[0m"
 echo -e "\033[32m║\033[33m Author       : Agung                                              \033[32m║\e[0m"
-echo -e "\033[32m║\033[33m Description  : Agung VPN Menu Management                             \033[32m║\e[0m"
-echo -e "\033[32m║\033[33m Contact      : WhatsApp 082131861788                                 \033[32m║\e[0m"
-echo -e "\033[32m║\033[33m Website      : kyt.systems                                         \033[32m║\e[0m"
+echo -e "\033[32m║\033[33m Description  : Agung Tunneling Menu Management                             \033[32m║\e[0m"
+echo -e "\033[32m║\033[33m Contact      : WhatsApp 087792681887                                 \033[32m║\e[0m"
+echo -e "\033[32m║\033[33m Website      : mytun.cloud                                         \033[32m║\e[0m"
 echo -e "\033[32m╚══════════════════════════════════════════════════════════════════════╝\e[0m"
 Green="\e[92;1m"
 RED="\033[31m"
@@ -443,22 +443,11 @@ END
 cat > /etc/issue.net << END
 happy conneting
 
-<p style="text-align: center;">
-    <span style="color: #41A85F; font-size: 26px;"><strong>kyt VPN</strong></span>
-    <span style="font-size: 26px;"><strong> </strong></span>
-    <span style="color: #F37934; font-size: 26px;"><strong>PREMIUM</strong></span>
-    <span style="font-size: 26px;">&nbsp;</span>
-</p>
-<p style="text-align: center;">
-    <span style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">
-        <span style="color: #E25041; background-color: #61BD6D;">Blitar Jatim</span>
-        <span style="background-color: #61BD6D;">&nbsp;</span>
-    </span>
-</p>
-<p style="text-align: center;">
-    <span style="color: #B8312F;">Telp/WhatsApp</span>:
-    <span style="color: #EFEFEF;">087792681887</span>
-</p>
+<br><br><font color="green"><b>=== Premium Server ===</b></font><br><br>
+<font color="blue"><b>AGUNG STORE</b></font><br>
+<font color="red"><b>Don't Use VPN For Ilegal</b></font><br><br>
+<font color="magenta"><b>Enjoy and Have Fun :)</b></font><br>
+<font color="black"><b>wa.me/6287792681887</b></font><br>
 END
 
 # Terapkan banner ke SSH dan Dropbear
@@ -481,7 +470,7 @@ download_config() {
     wget -O /etc/nginx/conf.d/xray.conf "https://github.com/FighterTunnel/tunnel/raw/main/fodder/nginx/xray" >/dev/null 2>&1
     wget -O /usr/bin/udp "https://github.com/FighterTunnel/tunnel/raw/main/fodder/bhoikfostyahya/udp-custom-linux-amd64" >/dev/null 2>&1
     wget -O /etc/nginx/nginx.conf "https://github.com/FighterTunnel/tunnel/raw/main/fodder/nginx/nginx.conf" >/dev/null 2>&1
-    wget https://raw.githubusercontent.com/altunnel/v4/main/menu/menu.zip
+    wget https://raw.githubusercontent.com/altunnel/v4/main/limit/menu.zip
     unzip menu.zip
     chmod +x menu/*
     mv menu/* /usr/local/sbin
@@ -641,6 +630,33 @@ WantedBy=multi-user.target
 
 EOF
 
+}
+
+clear
+function ins_swab(){
+clear
+print_install "Memasang Swap"
+gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+    gotop_link="https://github.com/xxxserxxx/gotop/releases/download/v$gotop_latest/gotop_v"$gotop_latest"_linux_amd64.deb"
+    curl -sL "$gotop_link" -o /tmp/gotop.deb
+    dpkg -i /tmp/gotop.deb >/dev/null 2>&1
+    
+        # > Buat swap
+    dd if=/dev/zero of=/swapfile bs=1024 count=2097152
+    mkswap /swapfile
+    chown root:root /swapfile
+    chmod 0600 /swapfile >/dev/null 2>&1
+    swapon /swapfile >/dev/null 2>&1
+    sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
+
+    # > Singkronisasi jam
+    chronyd -q 'server 0.id.pool.ntp.org iburst'
+    chronyc sourcestats -v
+    chronyc tracking -v
+    
+    wget ${REPO}limit/bbr.sh &&  chmod +x bbr.sh && ./bbr.sh
+    wget https://raw.githubusercontent.com/SARTAMP/src/main/udp/udp-custom.sh && chmod +x udp-custom.sh && ./udp-custom.sh
+print_success "Swap"
 }
 
 instalbot() {
@@ -826,7 +842,7 @@ echo -e "\033[0m                           : 7300          "
 echo -e "\033[0m ------------------------------------------\033[0m"
 echo -e "\033[0m   Proxy Squid             : 3128          "
 echo -e "\033[0m ==========================================\033[0m"
-echo -e "\033[0m      Donate  :   t.me/agungvpnstore "
+echo -e "\033[0m      Donate  :   t.me/AgungStores "
 echo -e "\033[0m ==========================================\033[0m"
     secs_to_human "$(($(date +%s) - ${start}))"
     read -e -p "         Please Reboot Your Vps [y/n] " -i "y" str
@@ -859,6 +875,7 @@ main() {
         install_cert
         download_config
         setup_perangkat
+        ins_swab
         instalbot
         restart_system
         ;;
@@ -880,6 +897,7 @@ main() {
         install_cert
         download_config
         setup_perangkat
+        ins_swab
         instalbot
         restart_system
     ;;
