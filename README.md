@@ -14,8 +14,8 @@
 <pre><code>wget https://raw.githubusercontent.com/altunnel/v4/main/repoindo.sh && chmod +x repoindo.sh && ./repoindo.sh</code></pre>
 
 ### TESTED ON OS 
-- UBUNTU 20.04.05
-- DEBIAN 10, 11
+- UBUNTU 20.04, 22.04
+- DEBIAN 10, 11, 12
 
 ### FITUR TAMBAHAN
 - Tambah Swap 2Gib
