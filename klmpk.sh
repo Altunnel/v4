@@ -60,11 +60,11 @@ check_vz() {
 
 logofigh() {
 
-echo -e "$green    _                             ____  _$NC"
-echo -e "$green   / \   __ _ _   _ _ __   __ _  / ___|| |_ ___  _ __ ___$NC"
-echo -e "$green  / _ \ / _` | | | | '_ \ / _` | \___ \| __/ _ \| '__/ _ \$NC"
-echo -e "$green / ___ \ (_| | |_| | | | | (_| |  ___) | || (_) | | |  __/$NC"
-echo -e "$green/_/   \_\__, |\__,_|_| |_|\__, | |____/ \__\___/|_|  \___|$NC"
+echo -e "$green    _                             ____  _ $NC"
+echo -e "$green   / \   __ _ _   _ _ __   __ _  / ___|| |_ ___  _ __ ___ $NC"
+echo -e "$green  / _ \ / _` | | | | '_ \ / _` | \___ \| __/ _ \| '__/ _ \ $NC"
+echo -e "$green / ___ \ (_| | |_| | | | | (_| |  ___) | || (_) | | |  __/ $NC"
+echo -e "$green/_/   \_\__, |\__,_|_| |_|\__, | |____/ \__\___/|_|  \___| $NC"
 echo -e "$green        |___/             |___/$NC"
 echo -e "    ${YELLOW}Copyright${FONT} (C)${GRAY} WhatsApp: 087792681887$NC"
 echo -e "    ${RED}Autoscript Agung Tunneling (multi port)${FONT}"
