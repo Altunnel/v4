@@ -60,13 +60,12 @@ check_vz() {
 
 logofigh() {
 
-echo -e 
-    _                             ____  _
-   / \   __ _ _   _ _ __   __ _  / ___|| |_ ___  _ __ ___
-  / _ \ / _` | | | | '_ \ / _` | \___ \| __/ _ \| '__/ _ \
- / ___ \ (_| | |_| | | | | (_| |  ___) | || (_) | | |  __/
-/_/   \_\__, |\__,_|_| |_|\__, | |____/ \__\___/|_|  \___|
-        |___/             |___/" | lolcat -p 0.7
+echo -e "$green    _                             ____  _$NC"
+echo -e "$green   / \   __ _ _   _ _ __   __ _  / ___|| |_ ___  _ __ ___$NC"
+echo -e "$green  / _ \ / _` | | | | '_ \ / _` | \___ \| __/ _ \| '__/ _ \$NC"
+echo -e "$green / ___ \ (_| | |_| | | | | (_| |  ___) | || (_) | | |  __/$NC"
+echo -e "$green/_/   \_\__, |\__,_|_| |_|\__, | |____/ \__\___/|_|  \___|$NC"
+echo -e "$green        |___/             |___/$NC"
 echo -e "    ${YELLOW}Copyright${FONT} (C)${GRAY} WhatsApp: 087792681887$NC"
 echo -e "    ${RED}Autoscript Agung Tunneling (multi port)${FONT}"
 echo -e "${RED}Pastikan koneksi internet stabil saat menginstal script ${FONT}"
@@ -445,11 +444,10 @@ END
 cat > /etc/issue.net << END
 happy conneting
 
-<br><br><font color="green"><b>=== Premium Server ===</b></font><br><br>
-<font color="blue"><b>AGUNG STORE</b></font><br>
-<font color="red"><b>Don't Use VPN For Ilegal</b></font><br><br>
-<font color="magenta"><b>Enjoy and Have Fun :)</b></font><br>
-<font color="black"><b>wa.me/6287792681887</b></font><br>
+<br><font color="green"><b>=== Vip Premium by Agung Store ===</b></font><br><br>
+<font color="#00008B"><b>My contact : wa.me/6287792681887</b></font><br>
+<font color="red"><b>Don't use VPN for ilegal</b></font><br><br>
+<font color="magenta"><b>Support me guys :)</br></font><br><br>
 END
 
 # Terapkan banner ke SSH dan Dropbear
