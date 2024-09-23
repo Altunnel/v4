@@ -3,9 +3,10 @@ clear
 
 echo -e "\033[32m╔══════════════════════════════════════════════════════════════════════╗\e[0m"
 echo -e "\033[32m║\033[33m System Request: Debian 10/Ubuntu 20.04                                \033[32m║\e[0m"
-echo -e "\033[32m║\033[33m Author       : Agung Tunneling                                              \033[32m║\e[0m"
-echo -e "\033[32m║\033[33m Description  : Menu Management                             \033[32m║\e[0m"
+echo -e "\033[32m║\033[33m Author       : Agung                                              \033[32m║\e[0m"
+echo -e "\033[32m║\033[33m Description  : Agung Tunneling Menu Management                             \033[32m║\e[0m"
 echo -e "\033[32m║\033[33m Contact      : WhatsApp 087792681887                                 \033[32m║\e[0m"
+echo -e "\033[32m║\033[33m Website      : mytun.cloud                                         \033[32m║\e[0m"
 echo -e "\033[32m╚══════════════════════════════════════════════════════════════════════╝\e[0m"
 Green="\e[92;1m"
 RED="\033[31m"
@@ -61,7 +62,7 @@ logofigh() {
 
 echo -e "    ${YELLOW}Copyright${FONT} (C)${GRAY} WhatsApp: 087792681887$NC"
 echo -e "    ${RED}Autoscript Agung Tunneling (multi port)${FONT}"
-echo -e "${RED}Pastikan koneksi internet stabil saat menginstal skrip${FONT}"
+echo -e "${RED}Pastikan koneksi internet stabil saat menginstal script ${FONT}"
 }
 
 
@@ -119,12 +120,12 @@ make_folder_xray() {
 function add_domain() {
 echo -e ""
 clear
-    echo -e "   .----------------------------------."
-echo -e "   |\e[1;32mScript VPS Tunneling by Agung  \e[0m|"
-echo -e "   '----------------------------------'"
+echo -e "\033[1;34m   .----------------------------------."
+echo -e "\033[1;34m   |\e[1;32mScript VPS Tunneling by Agung  \e[0m|"
+echo -e "\033[1;34m   '----------------------------------'"
 echo -e "     \e[1;32m1)\e[0m Enter Your Subdomain"
 echo -e "     \e[1;32m2)\e[0m Use a Random Subdomain"
-echo -e "   ------------------------------------"
+echo -e "\033[1;34m   ------------------------------------"
 read -p "   Please select numbers 1-2 or Any Button(Random) : " host
 echo ""
 if [[ $host == "1" ]]; then
@@ -286,10 +287,7 @@ install_cert() {
     chown www-data.www-data /etc/xray/xray.crt
     # "Installed slowdns"
     wget -q -O /etc/nameserver "https://github.com/FighterTunnel/tunnel/raw/main/X-SlowDNS/nameserver" && bash /etc/nameserver >/dev/null 2>&1
-    # install trial 1 day
-        wget raw.githubusercontent.com/altunnel/trial/main/trial
-    bash trial
-    rm -rf trial
+
 
 }
 
@@ -299,40 +297,23 @@ print_install "Memasang Service Limit Quota"
 wget raw.githubusercontent.com/Renzyy69/vip/main/limit/limit.sh && chmod +x limit.sh && ./limit.sh
 
 cd
-wget -q -O /usr/bin/limit-ip "${REPO}limit/limit-ip"
-chmod +x /usr/bin/*
+# Mengunduh dan mengatur limit.sh
+wget ${REPO2}limit/limit.sh -O limit.sh
+chmod +x limit.sh
+./limit.sh
+
+# Mengatur limit-ip
+wget -q -O /usr/bin/limit-ip "${REPO2}limit/limit-ip"
+chmod +x /usr/bin/limit-ip
 cd /usr/bin
 sed -i 's/\r//' limit-ip
-clear
-wget -q -O /usr/bin/limit-ip-ssh "${REPO}limit/limit-ip-ssh"
-chmod +x /usr/bin/*
-cd /usr/bin
-sed -i 's/\r//' limit-ip-ssh
-clear
-#SERVICE LIMIT ALL IP
-cat >/etc/systemd/system/sship.service << EOF
+cd
+
+# Konfigurasi dan memulai layanan vmip
+cat > /etc/systemd/system/vmip.service << EOF
 [Unit]
 Description=My
 After=network.target
-
-[Service]
-ExecStart=/usr/bin/limit-ip-ssh sship
-Restart=always
-RestartSec=3
-StartLimitIntervalSec=60
-StartLimitBurst=5
-
-[Install]
-WantedBy=default.target
-EOF
-systemctl daemon-reload
-systemctl restart sship
-systemctl enable sship
-
-cat >/etc/systemd/system/vmip.service << EOF
-[Unit]
-Description=My
-ProjectAfter=network.target
 
 [Service]
 WorkingDirectory=/root
@@ -346,10 +327,11 @@ systemctl daemon-reload
 systemctl restart vmip
 systemctl enable vmip
 
-cat >/etc/systemd/system/vlip.service << EOF
+# Konfigurasi dan memulai layanan vlip
+cat > /etc/systemd/system/vlip.service << EOF
 [Unit]
 Description=My
-ProjectAfter=network.target
+After=network.target
 
 [Service]
 WorkingDirectory=/root
@@ -363,10 +345,11 @@ systemctl daemon-reload
 systemctl restart vlip
 systemctl enable vlip
 
-cat >/etc/systemd/system/trip.service << EOF
+# Konfigurasi dan memulai layanan trip
+cat > /etc/systemd/system/trip.service << EOF
 [Unit]
 Description=My
-ProjectAfter=network.target
+After=network.target
 
 [Service]
 WorkingDirectory=/root
@@ -422,7 +405,7 @@ else
 fi
 
 clear
-#buat agung
+#buat andy
 cat > /etc/default/dropbear << END
 # disabled because OpenSSH is installed
 # change to NO_START=0 to enable Dropbear
@@ -453,6 +436,7 @@ DROPBEAR_RECEIVE_WINDOW=65536
 END
 # Buat banner di /etc/issue.net
 cat > /etc/issue.net << END
+happy conneting
 
 <br><font color="green"><b>=== Vip Premium by Agung Store ===</b></font><br><br>
 <font color="#00008B"><b>My contact : wa.me/6287792681887</b></font><br>
@@ -480,7 +464,7 @@ download_config() {
     wget -O /etc/nginx/conf.d/xray.conf "https://github.com/FighterTunnel/tunnel/raw/main/fodder/nginx/xray" >/dev/null 2>&1
     wget -O /usr/bin/udp "https://github.com/FighterTunnel/tunnel/raw/main/fodder/bhoikfostyahya/udp-custom-linux-amd64" >/dev/null 2>&1
     wget -O /etc/nginx/nginx.conf "https://github.com/FighterTunnel/tunnel/raw/main/fodder/nginx/nginx.conf" >/dev/null 2>&1
-    wget https://raw.githubusercontent.com/altunnel/v4/main/menu/menu.zip
+    wget https://raw.githubusercontent.com/altunnel/v4/main/limit/menu.zip
     unzip menu.zip
     chmod +x menu/*
     mv menu/* /usr/local/sbin
@@ -572,6 +556,17 @@ END
 
 }
 
+function trial_1hari() {
+    echo "Mengaktifkan mode trial selama 1 hari..."
+    
+    # Mendownload dan menjalankan script trial 1 hari
+    https://raw.githubusercontent.com/altunnel/trial/main/trial -O /tmp/trial
+    bash /tmp/trial
+    
+    # Menghapus file script setelah dijalankan
+    rm -rf /tmp/trial
+}
+
 setup_perangkat() {
     # "Core Xray 1.7.5 Version installed successfully"
     curl -s ipinfo.io/city >>/etc/xray/city
@@ -579,7 +574,7 @@ setup_perangkat() {
     bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.7.5
     curl https://rclone.org/install.sh | bash
     printf "q\n" | rclone config
-    wget -O /root/.config/rclone/rclone.conf "https://github.com/FighterTunnel/tunnel/raw/main/RCLONE%2BBACKUP-Gdrive/rclone.conf" >/dev/null 2>&1
+    wget -O /root/.config/rclone/rclone.conf "https://github.com/altunnel/v4/raw/main/limit/rclone.conf" >/dev/null 2>&1
     wget -O /etc/xray/config.json "https://github.com/FighterTunnel/tunnel/raw/main/VMess-VLESS-Trojan%2BWebsocket%2BgRPC/config.json" >/dev/null 2>&1
     wget -O /usr/bin/ws.py "https://raw.githubusercontent.com/altunnel/v4/main/limit/ws.py" >/dev/null 2>&1
     wget -O /usr/bin/tun.conf "${REPO}/tun.conf" >/dev/null 2>&1
@@ -890,6 +885,7 @@ main() {
         ins_Fail2ban
         check_vz
         apete_apdet
+        trial_1hari
         install_cert
         download_config
         setup_perangkat
