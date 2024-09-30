@@ -15,7 +15,7 @@
 <pre><code>wget https://raw.githubusercontent.com/altunnel/v4/main/repoindo.sh && chmod +x repoindo.sh && ./repoindo.sh</code></pre>
 
 ### TESTED ON OS 
-- UBUNTU 20.04, 22.04
+- UBUNTU 20.04
 - DEBIAN 10, 11
 
 ### FITUR TAMBAHAN
@@ -46,7 +46,9 @@
 - VMESS NONTLS 80
 - SSH WS / TLS 443
 - SSH NON TLS 8880
-- OVPN SSL/TCP 1194
+- OVPN SSL / TCP 1194
+- NOOBZVPN TCP 8880
+- NOOBZVPN SSL 8443
 - SLOWDNS 5300
 - NOOBZVPN 2082 2083
 ```
