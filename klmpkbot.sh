@@ -41,19 +41,26 @@ echo -e PUB='"'$PUB'"' >> /root/regis/var.txt
 echo -e HOST='"'$NS'"' >> /root/regis/var.txt
 clear
 
-cat > /etc/systemd/system/regis.service << END
+    cat >/usr/bin/andy <<EOF
+#!/bin/bash
+
+cd /root
+python3.8 -m regis
+EOF
+    cat >/etc/systemd/system/regis.service <<EOF
 [Unit]
-Description=Simple register - @AgungStore
-After=network.target
+Description=Agung Bot 
+Documentation=Agung Tunneling
+After=syslog.target network-online.target
 
 [Service]
-WorkingDirectory=/root
-ExecStart=/usr/bin/python3 -m regis
-Restart=always
+User=root
+NoNewPrivileges=true
+ExecStart=/usr/bin/agung
 
 [Install]
 WantedBy=multi-user.target
-END
+EOF
 
 systemctl start regis 
 systemctl enable regis
