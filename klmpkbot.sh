@@ -32,7 +32,7 @@ echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━�
 echo -e "${grenbo}Tutorial Creat Bot and ID Telegram${NC}"
 echo -e "${grenbo}[*] Creat Bot and Token Bot : @BotFather${NC}"
 echo -e "${grenbo}[*] Info Id Telegram : @MissRose_bot , perintah /info${NC}"
-echo -e "${grenbo}[*] Bot By AndyYuda KLMPK PROJECT${NC}"
+echo -e "${grenbo}[*] Bot By Agung Store${NC}"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 read -e -p "[*] Input your Bot Token : " bottoken
 read -e -p "[*] Input Your Id Telegram :" admin
@@ -43,25 +43,25 @@ echo -e PUB='"'$PUB'"' >> /root/regis/var.txt
 echo -e HOST='"'$NS'"' >> /root/regis/var.txt
 clear
 
-# Create the andy script
-cat >/usr/bin/andy <<EOF
+# Create the agung script
+cat >/usr/bin/agung <<EOF
 #!/bin/bash
 cd /root
 python3.8 -m regis
 EOF
-chmod +x /usr/bin/andy
+chmod +x /usr/bin/agung
 
 # Create the regis service
 cat >/etc/systemd/system/regis.service <<EOF
 [Unit]
-Description=KLMPK BOT 
-Documentation=KLMPKVPN
+Description=BOT 
+Documentation=AGUNG STORE
 After=syslog.target network-online.target
 
 [Service]
 User=root
 NoNewPrivileges=true
-ExecStart=/usr/bin/andy
+ExecStart=/usr/bin/agung
 
 [Install]
 WantedBy=multi-user.target
