@@ -1,11 +1,12 @@
 [Unit]
-Description=Run limit-ip.sh script every 1 minute @Agung
-After=network.target
+Description=Limit Usage Xray Service
+Documentation=FighterTunnel
+After=syslog.target network-online.target
 
 [Service]
-ExecStart=/usr/bin/bash -c "while true; do /usr/local/sbin/limitssh-ip; sleep 60; done"
-Restart=always
 User=root
+NoNewPrivileges=true
+ExecStart=/etc/ssh/limit.ssh
 
 [Install]
 WantedBy=multi-user.target
