@@ -5,13 +5,13 @@ KEY=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 2)
 TIME="10"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 TEXT="
-<code>──────────────────────────────</code>
+<code>────────────────────</code>
 <b>⚠️NOTIF QUOTA HABIS XRAY VLESS⚠️</b>
-<code>──────────────────────────────</code>
+<code>────────────────────</code>
 <code>Username  : </code><code>$user</code>
 <code>limit Quota: </code><code>$total2</code>
 <code>Usage     : </code><code>$total</code>
-<code>──────────────────────────────</code>
+<code>────────────────────</code>
 "
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 }
@@ -33,8 +33,8 @@ function con() {
 
   while true; do
   sleep 5
-  data=($(cat /etc/xray/vless.json | grep '^#&' | cut -d ' ' -f 2 | sort | uniq))
-  if [[ ! -e /etc/vless ]]; then
+  data=($(cat /etc/xray/config.json | grep '^#&' | cut -d ' ' -f 2 | sort | uniq))
+  if [[ ! -e /etc/limit/vless ]]; then
   mkdir -p /etc/limit/vless
   fi
   for user in ${data[@]}
@@ -72,8 +72,8 @@ for user in ${data[@]}
       if [[ ${Usage} -gt ${checkLimit} ]]; then
       total=$(con ${Usage})
       total2=$(con ${checkLimit})
-      exp=$(grep -w "^#& $user" "/etc/xray/vless.json" | cut -d ' ' -f 3 | sort | uniq)
-      sed -i "/^#& $user $exp/,/^},{/d" /etc/xray/vless.json
+      exp=$(grep -w "^#& $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+      sed -i "/^#& $user $exp/,/^},{/d" /etc/xray/config.json
       sed -i "/^#& $user $exp/d" /etc/vless/.vless.db
       send-log
       rm -f /etc/funny/limit/vless/ip/$user
@@ -81,7 +81,7 @@ for user in ${data[@]}
 	  rm -f /etc/limit/vless/$user
 	  rm -f /etc/limit/vless/quota/$user
 	  rm -f /var/www/html/vless-$user.txt
-      systemctl restart vless >> /dev/null 2>&1
+      systemctl restart xray >> /dev/null 2>&1
       else
       echo ""
       fi
