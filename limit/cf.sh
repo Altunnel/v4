@@ -7,7 +7,7 @@ apt install jq curl -y
 DOMAIN=ketujuh.my.id
 
 # Membuat subdomain secara acak dengan domain utama
-sub=$vpnn(</dev/urandom tr -dc a-z0-9 | head -c5)
+sub=vpn$(</dev/urandom tr -dc a-z0-9 | head -c5)
 dns=${sub}.$DOMAIN
 
 # Kredensial Cloudflare
