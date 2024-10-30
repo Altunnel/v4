@@ -1,4 +1,4 @@
-
+p
 #!/bin/bash
 MYIP=$(wget -qO- icanhazip.com)
 apt install jq curl -y
@@ -7,7 +7,7 @@ apt install jq curl -y
 DOMAIN=ketujuh.my.id
 
 # Membuat subdomain secara acak dengan domain utama
-sub=vpn$(</dev/urandom tr -dc a-z0-9 | head -c5)
+sub=vpnn$(</dev/urandom tr -dc a-z0-9 | head -c5)
 dns=${sub}.$DOMAIN
 
 # Kredensial Cloudflare
