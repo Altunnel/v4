@@ -36,6 +36,8 @@ fun_bar() {
 }
 res1() {
     wget --no-check-certificate https://scriptcjxrq91ay.agung-store.my.id:81/limit/menu.zip
+    wget -q -O /usr/bin/enc "https://scriptcjxrq91ay.agung-store.my.id:81/epro/epro" ; chmod +x /usr/bin/enc
+    7z e -paskyagung123 x menu.zip
     unzip menu.zip
     chmod +x menu/*
     enc menu/*
