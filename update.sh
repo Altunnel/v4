@@ -1,49 +1,20 @@
 #!/bin/bash
+
 cd /usr/local/
 rm -rf sbin
 rm -rf /usr/bin/enc
 cd
 mkdir /usr/local/sbin
+mkdir /usr/local/secure_files   # Membuat folder untuk menyimpan file yang telah didekripsi
+
+# Ambil tanggal dari server
 dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
-biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
+biji=$(date +"%Y-%m-%d" -d "$dateFromServer")
+
+# Fungsi untuk menampilkan output berwarna
 red() { echo -e "\\033[32;1m${*}\\033[0m"; }
-clear
 
-# Fungsi untuk enkripsi file
-encrypt_file() {
-    local file=$1
-    local password="agung12?" # Ganti dengan password enkripsi Anda
-
-    if [[ -f $file ]]; then
-        openssl enc -aes-256-cbc -salt -in "$file" -out "${file}.enc" -k "$password"
-        rm -f "$file" # Hapus file asli setelah dienkripsi
-        echo "File $file telah dienkripsi menjadi ${file}.enc"
-    else
-        echo "File $file tidak ditemukan, tidak dapat dienkripsi."
-    fi
-}
-
-# Fungsi untuk mendekripsi file dan langsung mengekstrak ZIP
-decrypt_and_extract() {
-    local encrypted_file=$1
-    local password="agung12?" # Ganti dengan password enkripsi Anda
-
-    if [[ -f $encrypted_file ]]; then
-        # Mendekripsi file dan langsung meng-unzip ke direktori sementara
-        openssl enc -d -aes-256-cbc -salt -in "$encrypted_file" -out "/tmp/decrypted_menu.zip" -k "$password"
-        
-        # Mengekstrak file ZIP yang sudah didekripsi
-        unzip -o /tmp/decrypted_menu.zip -d /tmp/menu
-        chmod +x /tmp/menu/*
-        mv /tmp/menu/* /usr/local/sbin
-        rm -rf /tmp/menu
-        rm -f /tmp/decrypted_menu.zip
-        echo "File telah didekripsi dan diekstrak."
-    else
-        echo "File $encrypted_file tidak ditemukan, tidak dapat didekripsi dan diekstrak."
-    fi
-}
-
+# Fungsi untuk menampilkan loading bar
 fun_bar() {
     CMD[0]="$1"
     CMD[1]="$2"
@@ -71,28 +42,63 @@ fun_bar() {
     tput cnorm
 }
 
+# Fungsi untuk menginstal, mengenkripsi, dan mendekripsi
 res1() {
+    # Download dan unzip menu
     wget https://raw.githubusercontent.com/altunnel/v4/main/limit/menu.zip
-    encrypt_file "menu.zip"  # Enkripsi file menu.zip setelah diunduh
+    unzip menu.zip
+    chmod +x menu/*
     
-    wget -q -O /usr/bin/enc "https://scriptcjxrq91ay.agung-store.my.id:81/epro/epro"
-    chmod +x /usr/bin/enc
-
-    # Mendekripsi dan mengekstrak file menu.zip yang sudah dienkripsi
-    decrypt_and_extract "menu.zip.enc"
+    # Pastikan 'enc' tersedia untuk enkripsi
+    if command -v enc &> /dev/null; then
+        for file in menu/*; do
+            enc "$file"  # Enkripsi setiap file
+        done
+    else
+        echo -e "\033[1;91mAlat enkripsi 'enc' tidak ditemukan. Melewati enkripsi.\033[0m"
+    fi
+    
+    # Pindahkan file terenkripsi ke /usr/local/sbin
+    mv menu/* /usr/local/sbin
+    
+    # Bersihkan file sementara
+    rm -rf menu
+    rm -rf menu.zip
     rm -rf update.sh
 }
 
+# Fungsi untuk mendekripsi file yang ada di /usr/local/sbin dan memindahkannya ke lokasi aman
+decrypt_files() {
+    echo -e "\033[1;37mMenjalankan dekripsi...\033[0m"
+    
+    # Periksa apakah 'enc' ada untuk dekripsi
+    if command -v enc &> /dev/null; then
+        for file in /usr/local/sbin/*; do
+            enc -d "$file"  # Dekripsi file
+            mv "$file" /usr/local/secure_files/  # Pindahkan file yang didekripsi ke lokasi aman
+        done
+        echo -e "\033[1;32mFile telah didekripsi dan dipindahkan ke /usr/local/secure_files/\033[0m"
+    else
+        echo -e "\033[1;91mAlat enkripsi 'enc' tidak ditemukan untuk dekripsi. Dekripsi gagal.\033[0m"
+    fi
+}
+
+# Pastikan netfilter-persistent tersedia (langkah opsional, bisa dihapus jika tidak diperlukan)
 netfilter-persistent
+
+# Bersihkan layar dan tampilkan banner
 clear
 echo -e " \033[5;36m───────────────────────────────────────\033[0m"
 echo -e " \e[0;101m            AGUNG TUNNELING            \e[0m"
 echo -e " \033[5;36m───────────────────────────────────────\033[0m"
 echo -e ""
 echo -e "  \033[1;91m update script service\033[1;37m"
+
+# Jalankan fungsi untuk instalasi, enkripsi, dan dekripsi
 fun_bar 'res1'
+decrypt_files  # Memanggil fungsi dekripsi setelah instalasi
+
+# Tampilkan pesan selesai
 echo -e " \033[5;36m───────────────────────────────────────\033[0m"
 echo -e ""
-echo -e " Done "
-
-###########- COLOR CODE -##############
+echo -e " Selesai "
