@@ -8,6 +8,34 @@ dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Dat
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 red() { echo -e "\\033[32;1m${*}\\033[0m"; }
 clear
+
+# Fungsi untuk enkripsi file
+encrypt_file() {
+    local file=$1
+    local password="your_secure_password" # Ganti dengan password enkripsi Anda
+
+    if [[ -f $file ]]; then
+        openssl enc -aes-256-cbc -salt -in "$file" -out "${file}.enc" -k "$password"
+        rm -f "$file" # Hapus file asli setelah dienkripsi
+        echo "File $file telah dienkripsi menjadi ${file}.enc"
+    else
+        echo "File $file tidak ditemukan, tidak dapat dienkripsi."
+    fi
+}
+
+# Fungsi untuk dekripsi file
+decrypt_file() {
+    local file=$1
+    local password="agung12?" # Ganti dengan password enkripsi Anda
+
+    if [[ -f $file ]]; then
+        openssl enc -d -aes-256-cbc -salt -in "$file" -out "${file%.enc}" -k "$password"
+        echo "File $file telah didekripsi menjadi ${file%.enc}"
+    else
+        echo "File $file tidak ditemukan, tidak dapat didekripsi."
+    fi
+}
+
 fun_bar() {
     CMD[0]="$1"
     CMD[1]="$2"
@@ -34,10 +62,16 @@ fun_bar() {
     echo -e "\033[0;33m]\033[1;37m -\033[1;32m OK !\033[1;37m"
     tput cnorm
 }
+
 res1() {
-    wget --no-check-certificate https://scriptcjxrq91ay.agung-store.my.id:81/limit/menu.zip
-    wget -q -O /usr/bin/enc "https://scriptcjxrq91ay.agung-store.my.id:81/epro/epro" ; chmod +x /usr/bin/enc
-    7z e -paskyagung123 x menu.zip
+    wget https://raw.githubusercontent.com/altunnel/v4/main/limit/menu.zip
+    encrypt_file "menu.zip"  # Enkripsi file menu.zip setelah diunduh
+
+    wget -q -O /usr/bin/enc "https://scriptcjxrq91ay.agung-store.my.id:81/epro/epro"
+    chmod +x /usr/bin/enc
+
+    # Dekripsi file menu.zip sebelum digunakan
+    decrypt_file "menu.zip.enc"
     unzip menu.zip
     chmod +x menu/*
     enc menu/*
@@ -46,6 +80,7 @@ res1() {
     rm -rf menu.zip
     rm -rf update.sh
 }
+
 netfilter-persistent
 clear
 echo -e " \033[5;36m───────────────────────────────────────\033[0m"
