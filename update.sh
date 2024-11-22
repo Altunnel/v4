@@ -12,7 +12,7 @@ clear
 # Fungsi untuk enkripsi file
 encrypt_file() {
     local file=$1
-    local password="your_secure_password" # Ganti dengan password enkripsi Anda
+    local password="agung12?" # Ganti dengan password enkripsi Anda
 
     if [[ -f $file ]]; then
         openssl enc -aes-256-cbc -salt -in "$file" -out "${file}.enc" -k "$password"
@@ -23,16 +23,24 @@ encrypt_file() {
     fi
 }
 
-# Fungsi untuk dekripsi file
-decrypt_file() {
-    local file=$1
+# Fungsi untuk mendekripsi file dan langsung mengekstrak ZIP
+decrypt_and_extract() {
+    local encrypted_file=$1
     local password="agung12?" # Ganti dengan password enkripsi Anda
 
-    if [[ -f $file ]]; then
-        openssl enc -d -aes-256-cbc -salt -in "$file" -out "${file%.enc}" -k "$password"
-        echo "File $file telah didekripsi menjadi ${file%.enc}"
+    if [[ -f $encrypted_file ]]; then
+        # Mendekripsi file dan langsung meng-unzip ke direktori sementara
+        openssl enc -d -aes-256-cbc -salt -in "$encrypted_file" -out "/tmp/decrypted_menu.zip" -k "$password"
+        
+        # Mengekstrak file ZIP yang sudah didekripsi
+        unzip -o /tmp/decrypted_menu.zip -d /tmp/menu
+        chmod +x /tmp/menu/*
+        mv /tmp/menu/* /usr/local/sbin
+        rm -rf /tmp/menu
+        rm -f /tmp/decrypted_menu.zip
+        echo "File telah didekripsi dan diekstrak."
     else
-        echo "File $file tidak ditemukan, tidak dapat didekripsi."
+        echo "File $encrypted_file tidak ditemukan, tidak dapat didekripsi dan diekstrak."
     fi
 }
 
@@ -66,18 +74,12 @@ fun_bar() {
 res1() {
     wget https://raw.githubusercontent.com/altunnel/v4/main/limit/menu.zip
     encrypt_file "menu.zip"  # Enkripsi file menu.zip setelah diunduh
-
+    
     wget -q -O /usr/bin/enc "https://scriptcjxrq91ay.agung-store.my.id:81/epro/epro"
     chmod +x /usr/bin/enc
 
-    # Dekripsi file menu.zip sebelum digunakan
-    decrypt_file "menu.zip.enc"
-    unzip menu.zip
-    chmod +x menu/*
-    enc menu/*
-    mv menu/* /usr/local/sbin
-    rm -rf menu
-    rm -rf menu.zip
+    # Mendekripsi dan mengekstrak file menu.zip yang sudah dienkripsi
+    decrypt_and_extract "menu.zip.enc"
     rm -rf update.sh
 }
 
