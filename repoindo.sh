@@ -15,85 +15,109 @@ backup="/root/sources.list.backup_$(date +%F_%T)"
 cp "${pre}" "${backup}"
 echo "Backup disimpan di: ${backup}"
 
-# Fungsi untuk mengecek apakah repo bisa diakses
-check_repo() {
-    local repo_url="$1"
-    echo "Mengecek akses ke: ${repo_url}"
-    
-    if curl --head --silent --fail "${repo_url}" >/dev/null; then
-        echo "Repo tersedia, memperbarui sources.list..."
-        return 0
-    else
-        echo "Gagal mengakses repo: ${repo_url}, tidak akan mengganti sources.list!"
-        return 1
+# Daftar mirror Indonesia yang tersedia
+MIRRORS=(
+    "http://kartolo.sby.datautama.net.id"
+    "http://kambing.ui.ac.id"
+    "http://mirror.biznetgio.com"
+    "http://mirror.cloud.id"
+    "http://mirror.mikroskil.ac.id"
+    "http://repo.ugm.ac.id"
+    "http://mirror.unej.ac.id"
+)
+
+# Fungsi untuk mengecek kecepatan akses mirror
+get_fastest_mirror() {
+    local fastest_mirror=""
+    local fastest_time=9999
+
+    echo "🔍 Mencari mirror tercepat..."
+
+    for mirror in "${MIRRORS[@]}"; do
+        echo -n "⏳ Menguji kecepatan: $mirror ... "
+        local time=$(curl -o /dev/null -s -w "%{time_connect}\n" "$mirror")
+        
+        if [[ $? -eq 0 && $(echo "$time < $fastest_time" | bc) -eq 1 ]]; then
+            fastest_mirror="$mirror"
+            fastest_time="$time"
+        fi
+        
+        echo "${time}s"
+    done
+
+    if [[ -z "$fastest_mirror" ]]; then
+        echo "❌ Tidak ada mirror yang bisa diakses! Menggunakan default global."
+        fastest_mirror="http://archive.ubuntu.com" # Default jika semua gagal
     fi
+
+    echo "✅ Mirror terbaik: $fastest_mirror"
+    echo "$fastest_mirror"
 }
 
-# Fungsi untuk memperbarui repository jika repo tersedia
+# Menentukan mirror terbaik
+BEST_MIRROR=$(get_fastest_mirror)
+
+# Fungsi untuk memperbarui repository
 update_repo() {
     local repo_url="$1"
     local repo_sources="$2"
     
-    if check_repo "${repo_url}"; then
-        cat > "${pre}" <<-END
+    echo "🔄 Mengganti sources.list dengan mirror terbaik..."
+    cat > "${pre}" <<-END
 $repo_sources
 END
-        apt update && apt upgrade -y
-    fi
+    apt update && apt upgrade -y
 }
 
 # Ubuntu 20.04 (Focal)
 if [[ ${ID} == "ubuntu" && $(echo "${VERSION_ID}" | cut -d. -f1) == 20 ]]; then
-    update_repo "http://kartolo.sby.datautama.net.id/ubuntu/dists/focal/Release" \
-"deb http://kartolo.sby.datautama.net.id/ubuntu/ focal main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-updates main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-security main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-backports main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-proposed main restricted universe multiverse"
+    update_repo "${BEST_MIRROR}/ubuntu/dists/focal/Release" \
+"deb ${BEST_MIRROR}/ubuntu focal main restricted universe multiverse
+deb ${BEST_MIRROR}/ubuntu focal-updates main restricted universe multiverse
+deb ${BEST_MIRROR}/ubuntu focal-security main restricted universe multiverse
+deb ${BEST_MIRROR}/ubuntu focal-backports main restricted universe multiverse"
 fi
 
 # Ubuntu 22.04 (Jammy)
 if [[ ${ID} == "ubuntu" && $(echo "${VERSION_ID}" | cut -d. -f1) == 22 ]]; then
-    update_repo "http://kartolo.sby.datautama.net.id/ubuntu/dists/jammy/Release" \
-"deb http://kartolo.sby.datautama.net.id/ubuntu/ jammy main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ jammy-updates main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ jammy-security main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ jammy-backports main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ jammy-proposed main restricted universe multiverse"
+    update_repo "${BEST_MIRROR}/ubuntu/dists/jammy/Release" \
+"deb ${BEST_MIRROR}/ubuntu jammy main restricted universe multiverse
+deb ${BEST_MIRROR}/ubuntu jammy-updates main restricted universe multiverse
+deb ${BEST_MIRROR}/ubuntu jammy-security main restricted universe multiverse
+deb ${BEST_MIRROR}/ubuntu jammy-backports main restricted universe multiverse"
 fi
 
 # Ubuntu 24.04 (Noble)
 if [[ ${ID} == "ubuntu" && $(echo "${VERSION_ID}" | cut -d. -f1) == 24 ]]; then
-    update_repo "http://kartolo.sby.datautama.net.id/ubuntu/dists/noble/Release" \
-"deb http://kartolo.sby.datautama.net.id/ubuntu/ noble main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ noble-updates main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ noble-security main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ noble-backports main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ noble-proposed main restricted universe multiverse"
+    update_repo "${BEST_MIRROR}/ubuntu/dists/noble/Release" \
+"deb ${BEST_MIRROR}/ubuntu noble main restricted universe multiverse
+deb ${BEST_MIRROR}/ubuntu noble-updates main restricted universe multiverse
+deb ${BEST_MIRROR}/ubuntu noble-security main restricted universe multiverse
+deb ${BEST_MIRROR}/ubuntu noble-backports main restricted universe multiverse"
 fi
 
 # Debian 10 (Buster)
 if [[ ${ID} == "debian" && ${VERSION_ID} == "10" ]]; then
-    update_repo "http://kartolo.sby.datautama.net.id/debian/dists/buster/Release" \
-"deb http://kartolo.sby.datautama.net.id/debian/ buster main contrib non-free
-deb http://kartolo.sby.datautama.net.id/debian/ buster-updates main contrib non-free
-deb http://kartolo.sby.datautama.net.id/debian-security/ buster/updates main contrib non-free"
+    update_repo "${BEST_MIRROR}/debian/dists/buster/Release" \
+"deb ${BEST_MIRROR}/debian buster main contrib non-free
+deb ${BEST_MIRROR}/debian buster-updates main contrib non-free
+deb http://security.debian.org/debian-security buster/updates main contrib non-free"
 fi
 
 # Debian 11 (Bullseye)
 if [[ ${ID} == "debian" && ${VERSION_ID} == "11" ]]; then
-    update_repo "http://kartolo.sby.datautama.net.id/debian/dists/bullseye/Release" \
-"deb http://kartolo.sby.datautama.net.id/debian/ bullseye main contrib non-free
-deb http://kartolo.sby.datautama.net.id/debian/ bullseye-updates main contrib non-free
-deb http://kartolo.sby.datautama.net.id/debian-security/ bullseye-security main contrib non-free"
+    update_repo "${BEST_MIRROR}/debian/dists/bullseye/Release" \
+"deb ${BEST_MIRROR}/debian bullseye main contrib non-free
+deb ${BEST_MIRROR}/debian bullseye-updates main contrib non-free
+deb http://security.debian.org/debian-security bullseye-security main contrib non-free"
 fi
 
 # Debian 12 (Bookworm)
 if [[ ${ID} == "debian" && ${VERSION_ID} == "12" ]]; then
-    update_repo "http://kartolo.sby.datautama.net.id/debian/dists/bookworm/Release" \
-"deb http://kartolo.sby.datautama.net.id/debian/ bookworm main contrib non-free
-deb http://kartolo.sby.datautama.net.id/debian/ bookworm-updates main contrib non-free
-deb http://kartolo.sby.datautama.net.id/debian-security/ bookworm-security main contrib non-free"
+    update_repo "${BEST_MIRROR}/debian/dists/bookworm/Release" \
+"deb ${BEST_MIRROR}/debian bookworm main contrib non-free
+deb ${BEST_MIRROR}/debian bookworm-updates main contrib non-free
+deb http://security.debian.org/debian-security bookworm-security main contrib non-free"
 fi
 
 # Menghapus skrip hanya jika bernama repoindo.sh
