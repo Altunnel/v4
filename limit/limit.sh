@@ -8,7 +8,7 @@ wget -q -O /etc/xray/limit.vmess "${REPO}limit/vmess" >/dev/null 2>&1
 wget -q -O /etc/xray/limit.vless "${REPO}limit/vless" >/dev/null 2>&1
 wget -q -O /etc/xray/limit.trojan "${REPO}limit/trojan" >/dev/null 2>&1
 wget -q -O /etc/xray/limit.shadowsocks "${REPO}limit/shadowsocks" >/dev/null 2>&1
-chmod +× /etc/ssh/limit.ssh
+chmod +x /etc/ssh/limit.ssh
 chmod +x /etc/xray/limit.vmess
 chmod +x /etc/xray/limit.vless
 chmod +x /etc/xray/limit.trojan
