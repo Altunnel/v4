@@ -46,7 +46,7 @@ function vmip() {
             sed -i "/### $user /{n;s/^/#/}" /etc/xray/config.json
             systemctl restart xray >> /dev/null 2>&1
             send_log "vmess" "$user" "$iplimit" "$cekcek"
-            echo "unlockxray vmess $user" | at now + 10 minutes
+            echo "unlockxray vmess $user" | at now + 15 minutes
         else
             echo ""
         fi
@@ -67,7 +67,7 @@ function vlip(){
             exp=$(grep -w "^#& $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
             sed -i "/^#& $user /{n;s/^/#/}" /etc/xray/config.json
             systemctl restart xray >> /dev/null 2>&1
-            echo "unlockxray vless $user" | at now + 10 minutes
+            echo "unlockxray vless $user" | at now + 15 minutes
             send_log "vless" "$user" "$iplimit" "$cekcek"
         else
             echo ""
@@ -89,7 +89,7 @@ function trip(){
             exp=$(grep -w "^#! $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
             sed -i "/^#! $user /{n;s/^/#/}" /etc/xray/config.json
             systemctl restart xray >> /dev/null 2>&1
-            echo "unlockxray trojan $user" | at now + 10 minutes
+            echo "unlockxray trojan $user" | at now + 15 minutes
             send_log "trojan" "$user" "$iplimit" "$cekcek"
         else
             echo ""
