@@ -14,18 +14,18 @@ function send_log(){
     TIME="10"
     URL="https://api.telegram.org/bot$KEY/sendMessage"
     TEXT="
-<code>──────────────────────────────</code>
+<code>————————————————————————————————————</code>
 <code>                ($protocol)   </code>
-<code>──────────────────────────────</code>
+<code>————————————————————————————————————</code>
 <code>        List User Multi Login   </code>
-<code>──────────────────────────────</code>
+<code>————————————————————————————————————</code>
 
 <code>IP     : </code><code>$IPVPS</code>
 <code>DOMAIN : </code><code>$domain</code>
 
-<code>──────────────────────────────</code>
+<code>————————————————————————————————————</code>
 <code>☞ $user $(date '+%H:%M:%S') $(date '+%Y-%m-%d') $cekcek PID</code>
-<code>──────────────────────────────</code>
+<code>————————————————————————————————————</code>
 
 ~ Account Locked for 15 minutes
 "
