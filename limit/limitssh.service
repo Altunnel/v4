@@ -3,7 +3,7 @@ Description=Run limit-ip.sh script every 1 minute @Agung
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/bash -c "while true; do /usr/sbin/agungnc/limitssh-ip; sleep 60; done"
+ExecStart=/usr/bin/bash -c "while true; do /usr/local/sbin/limitssh-ip; sleep 60; done"
 Restart=always
 User=root
 
