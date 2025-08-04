@@ -1,4 +1,4 @@
-p
+
 #!/bin/bash
 MYIP=$(wget -qO- icanhazip.com)
 apt install jq curl -y
@@ -33,19 +33,20 @@ if [[ "${#RECORD}" -le 10 ]]; then
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" \
-     --data '{"type":"A","name":"'${dns}'","content":"'${IP}'","ttl":120,"proxied":false}' | jq -r .result.id)
+     --data '{"type":"A","name":"'${dns}'","content":"'${IP}'","ttl":120,"proxied":true}' | jq -r .result.id)
 fi
 
 RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records/${RECORD}" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" \
-     --data '{"type":"A","name":"'${dns}'","content":"'${IP}'","ttl":120,"proxied":false}')
+     --data '{"type":"A","name":"'${dns}'","content":"'${IP}'","ttl":120,"proxied":true}')
 
 echo "$dns" > /root/domain
 echo "$dns" > /root/scdomain
 echo "$dns" > /etc/xray/domain
 echo "$dns" > /etc/v2ray/domain
 echo "$dns" > /etc/xray/scdomain
+mkdir -p /var/lib/kyt/ >/dev/null 2>&1
 echo "IP=$dns" > /var/lib/kyt/ipvps.conf
 cd
