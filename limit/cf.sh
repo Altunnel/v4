@@ -47,7 +47,6 @@ echo "$dns" > /root/scdomain
 echo "$dns" > /etc/xray/domain
 echo "$dns" > /etc/v2ray/domain
 echo "$dns" > /etc/xray/scdomain
-rm -r /var/lib/kyt/ipvps.conf
-mkdir -p /var/lib/kyt/ >/dev/null 2>&1
+mkdir -p /var/lib/kyt >/dev/null 2>&1
 echo "IP=$dns" > /var/lib/kyt/ipvps.conf
 cd
