@@ -7,7 +7,7 @@ apt install jq curl -y
 DOMAIN=ketujuh.my.id
 
 # Membuat subdomain secara acak dengan domain utama
-sub=vpn$(</dev/urandom tr -dc a-z0-9 | head -c8)
+sub=$(</dev/urandom tr -dc a-z0-9 | head -c5)
 dns=${sub}.$DOMAIN
 
 # Kredensial Cloudflare
@@ -33,14 +33,14 @@ if [[ "${#RECORD}" -le 10 ]]; then
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" \
-     --data '{"type":"A","name":"'${dns}'","content":"'${IP}'","ttl":120,"proxied":true}' | jq -r .result.id)
+     --data '{"type":"A","name":"'${dns}'","content":"'${IP}'","ttl":120,"proxied":false}' | jq -r .result.id)
 fi
 
 RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records/${RECORD}" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" \
-     --data '{"type":"A","name":"'${dns}'","content":"'${IP}'","ttl":120,"proxied":true}')
+     --data '{"type":"A","name":"'${dns}'","content":"'${IP}'","ttl":120,"proxied":false}')
 
 echo "$dns" > /root/domain
 echo "$dns" > /root/scdomain
