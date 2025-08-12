@@ -11,7 +11,8 @@
 # default value.
 
 Port 22
-Port 2223
+Port 2222
+Port 444
 #AddressFamily any
 #ListenAddress 0.0.0.0
 #ListenAddress ::
