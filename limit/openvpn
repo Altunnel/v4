@@ -21,7 +21,7 @@ apt install openvpn easy-rsa unzip openssl iptables iptables-persistent -y
 # 2. Download dan ekstrak konfigurasi VPN
 mkdir -p /etc/openvpn/server/easy-rsa/
 cd /etc/openvpn/
-repo="https://raw.githubusercontent.com/Andyyuda/P/main/"
+repo="https://raw.githubusercontent.com/Altunnel/v5/main/"
 wget ${repo}ssh/vpn.zip
 unzip vpn.zip
 rm -f vpn.zip
