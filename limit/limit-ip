@@ -15,7 +15,7 @@ function send_log(){
     URL="https://api.telegram.org/bot$KEY/sendMessage"
     TEXT="
 <code>————————————————————————————————————</code>
-<code>                ($protocol)   </code>
+<code>                $protocol   </code>
 <code>————————————————————————————————————</code>
 <code>        List User Multi Login   </code>
 <code>————————————————————————————————————</code>
