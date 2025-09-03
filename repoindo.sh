@@ -4,60 +4,67 @@ source /etc/os-release
 pre="/etc/apt/sources.list"
 cp "${pre}" /root/
 
-if [[ ${ID} == 'ubuntu' && $(echo "${VERSION_ID}" | cut -d. -f1) == 20 ]]; then
-cat > ${pre} <<-END
-deb http://kartolo.sby.datautama.net.id/ubuntu/ focal main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-updates main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-security main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-backports main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-proposed main restricted universe multiverse
+# Daftar mirror Indonesia
+MIRRORS=(
+  "http://kambing.ui.ac.id"
+  "http://kartolo.sby.datautama.net.id"
+  "http://repo.ugm.ac.id"
+  "http://repo.unej.ac.id"
+)
+
+# Test kecepatan mirror pakai curl (ambil header aja biar cepat)
+BEST_MIRROR=""
+BEST_TIME=999999
+
+echo "🔎 Mencari mirror tercepat..."
+for M in "${MIRRORS[@]}"; do
+    TIME=$(curl -o /dev/null -s -w '%{time_total}\n' "${M}" || echo 999999)
+    echo "  - $M : $TIME detik"
+    if (( $(echo "$TIME < $BEST_TIME" | bc -l) )); then
+        BEST_TIME=$TIME
+        BEST_MIRROR=$M
+    fi
+done
+
+echo "✅ Mirror terbaik: $BEST_MIRROR"
+
+# Tentukan codename sesuai distro
+if [[ ${ID} == "ubuntu" ]]; then
+    case ${VERSION_ID} in
+        20.04) CODENAME="focal" ;;
+        22.04) CODENAME="jammy" ;;
+        24.04) CODENAME="noble" ;;
+        24.10) CODENAME="oracular" ;;
+        25.04) CODENAME="plucky" ;;
+        *) echo "Versi Ubuntu tidak dikenali"; exit 1 ;;
+    esac
+
+    cat > ${pre} <<-END
+deb $BEST_MIRROR/ubuntu/ $CODENAME main restricted universe multiverse
+deb $BEST_MIRROR/ubuntu/ $CODENAME-updates main restricted universe multiverse
+deb $BEST_MIRROR/ubuntu/ $CODENAME-security main restricted universe multiverse
+deb $BEST_MIRROR/ubuntu/ $CODENAME-backports main restricted universe multiverse
 END
+
+elif [[ ${ID} == "debian" ]]; then
+    case ${VERSION_ID} in
+        10) CODENAME="buster" ;;
+        11) CODENAME="bullseye" ;;
+        12) CODENAME="bookworm" ;;
+        13) CODENAME="trixie" ;;
+        *) echo "Versi Debian tidak dikenali"; exit 1 ;;
+    esac
+
+    cat > ${pre} <<-END
+deb $BEST_MIRROR/debian/ $CODENAME main contrib non-free
+deb $BEST_MIRROR/debian/ $CODENAME-updates main contrib non-free
+deb $BEST_MIRROR/debian-security $CODENAME-security main contrib non-free
+END
+else
+    echo "Distro tidak didukung!"
+    exit 1
 fi
 
-if [[ ${ID} == 'ubuntu' && $(echo "${VERSION_ID}" | cut -d. -f1) == 22 ]]; then
-cat > ${pre} <<-END
-deb http://kartolo.sby.datautama.net.id/ubuntu/ jammy main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ jammy-updates main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ jammy-security main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ jammy-backports main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ jammy-proposed main restricted universe multiverse
-END
-fi
-
-if [[ ${ID} == 'ubuntu' && $(echo "${VERSION_ID}" | cut -d. -f1) == 24 ]]; then
-cat > ${pre} <<-END
-deb http://kartolo.sby.datautama.net.id/ubuntu/ noble main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ noble-updates main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ noble-security main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ noble-backports main restricted universe multiverse
-deb http://kartolo.sby.datautama.net.id/ubuntu/ noble-proposed main restricted universe multiverse
-END
-fi
-
-if [[ ${ID} == 'debian' && ${VERSION_ID} == 10 ]]; then
-cat > ${pre} <<-END
-deb http://kartolo.sby.datautama.net.id/debian/ buster main contrib non-free
-deb http://kartolo.sby.datautama.net.id/debian/ buster-updates main contrib non-free
-deb http://kartolo.sby.datautama.net.id/debian-security/ buster/updates main contrib non-free
-END
-fi
-
-if [[ ${ID} == 'debian' && ${VERSION_ID} == 11 ]]; then
-cat > ${pre} <<-END
-deb http://kartolo.sby.datautama.net.id/debian/ bullseye main contrib non-free
-deb http://kartolo.sby.datautama.net.id/debian/ bullseye-updates main contrib non-free
-deb http://kartolo.sby.datautama.net.id/debian-security/ bullseye-security main contrib non-free
-END
-fi
-
-if [[ ${ID} == 'debian' && ${VERSION_ID} == 12 ]]; then
-cat > ${pre} <<-END
-deb http://kartolo.sby.datautama.net.id/debian/ bookworm main contrib non-free
-deb http://kartolo.sby.datautama.net.id/debian/ bookworm-updates main contrib non-free
-deb http://kartolo.sby.datautama.net.id/debian-security/ bookworm-security main contrib non-free
-END
-fi
-
-apt update
-apt upgrade -y  # Menambahkan flag -y agar upgrade otomatis
-rm -- "$0"  # Menghapus skrip ini setelah selesai
+# Update dan upgrade
+apt update && apt upgrade -y
+rm repoindo.sh
