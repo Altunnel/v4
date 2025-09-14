@@ -20,9 +20,9 @@ echo "🔎 Mencari mirror tercepat..."
 for M in "${MIRRORS[@]}"; do
     TIME=$(curl -o /dev/null -s -w '%{time_total}\n' "${M}" || echo 999999)
     echo "  - $M : $TIME detik"
-    if (( $(echo "$TIME < $BEST_TIME" | bc -l) )); then
-        BEST_TIME=$TIME
-        BEST_MIRROR=$M
+    if (( $(echo "${TIME%.*}") < $(echo "${BEST_TIME%.*}") )); then
+       BEST_TIME=$TIME
+       BEST_MIRROR=$M
     fi
 done
 
