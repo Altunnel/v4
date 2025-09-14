@@ -58,7 +58,7 @@ elif [[ ${ID} == "debian" ]]; then
     cat > ${pre} <<-END
 deb $BEST_MIRROR/debian/ $CODENAME main contrib non-free
 deb $BEST_MIRROR/debian/ $CODENAME-updates main contrib non-free
-deb $BEST_MIRROR/debian-security $CODENAME-security main contrib non-free
+deb http://security.debian.org/debian-security $CODENAME-security main contrib non-free
 END
 else
     echo "Distro tidak didukung!"
